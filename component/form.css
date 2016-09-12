@@ -1,0 +1,21 @@
+:global(label.error) {
+    color: #D95C5C !important;
+    font-weight: normal;
+}
+
+:global(form.text-class .form-control[disabled]) {
+    border: none;
+    background-color: #FFF;
+    box-shadow: none;
+    cursor: context-menu;
+}
+
+:global(form.text-class .select2-container--default.select2-container--disabled .select2-selection--multiple) {
+    border: none;
+    background: #FFF;
+}
+
+:global(form.text-class .select2-container--default.select2-container--disabled .select2-selection--single) {
+    border: none;
+    background: #FFF;
+}
