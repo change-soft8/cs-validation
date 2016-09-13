@@ -1,12 +1,12 @@
 {
-  "name": "test_webpack",
-  "version": "1.0.0",
+  "name": "cs-validation",
+  "version": "1.0.2",
   "description": "验证组件",
   "main": "entry.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --progress --colors",
-    "eslint": "eslint --ext .js component"
+    "publish": "owner add shenqingling && npm owner add songhuaqian"
   },
   "author": "shenqingling",
   "license": "ISC",
