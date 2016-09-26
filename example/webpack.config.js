@@ -10,7 +10,7 @@ module.exports = {
         "./entry.js"
     ],
     output: {
-        path: path.resolve(__dirname, 'build'),
+        path: path.resolve(__dirname, '..', 'build'),
         filename: "bundle.js",
         publicPath: 'build'
     },
@@ -34,7 +34,7 @@ module.exports = {
                 exclude: /(node_modules|bower_components)/, //这两种文件不编译
                 loaders: ['react-hot', 'babel']
             },
-            
+
             // **IMPORTANT** This is needed so that each bootstrap js file required by
             // bootstrap-webpack has access to the jQuery object
             {
