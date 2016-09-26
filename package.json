@@ -1,12 +1,12 @@
 {
   "name": "cs-validation",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "验证组件",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cd example && webpack-dev-server --progress --colors",
-    "publish": "owner add shenqingling && npm owner add songhuaqian"
+    "publish": "npm owner add shenqingling && npm owner add songhuaqian"
   },
   "author": "shenqingling",
   "license": "ISC",
