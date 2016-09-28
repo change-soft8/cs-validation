@@ -2,7 +2,6 @@ import React from 'react';
 
 import style from './form.css';
 
-// import config from './config.js';
 import Utils from '../utils/utils';
 
 import Button from './button';
@@ -30,7 +29,6 @@ export default class Form extends React.Component{
 	 */
 	initForm(){
  		let datas = {};
-        let fs = this.refs.form;
         let checkValue = [];
         let pname;
         let len = this.refs.form && this.refs.form.length || 0;
@@ -89,7 +87,7 @@ export default class Form extends React.Component{
             this.ifUseConfig = true;
             let entityOper = this.props.entityOper;
             // 获取实体
-            let entity = this.entity = entityOper.split('-')[0];
+            this.entity = entityOper.split('-')[0];
             // 获取操作
             this.operation = entityOper.split('-')[1];
         }else{
@@ -140,8 +138,6 @@ export default class Form extends React.Component{
                 // 指定错误信息位置
                 // 如果是radio或checkbox或select
                 if (element.is(':radio') || element.is(':checkbox') || element.is('select')) {
-                    // 获取元素的name属性
-                    let eid = element.attr('name');
                     // 将错误信息添加当前元素的父结点后面
                     error.appendTo(element.parent());
                 } else {
@@ -240,7 +236,7 @@ export default class Form extends React.Component{
     }
 
 	render(){
-        const {disabled, entityOper, ...others} = this.props;
+        const {disabled, ...others} = this.props;
 		return(
 			<form ref="form" key={Utils.getKey('form')}>
                 {React.Children.map(this.props.children, (element, i) => {

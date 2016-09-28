@@ -19,4 +19,4 @@ var HelloMessage = React.createClass({
 });
 
 // 加载组件到 DOM 元素 mountNode
-ReactDOM.render(<HelloMessage name = "John" / >, document.getElementById('container'));
+ReactDOM.render(<HelloMessage />, document.getElementById('container'));
