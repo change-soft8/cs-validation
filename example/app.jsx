@@ -1,16 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
-// import Form from './component/form';
-// import Input from './component/input';
-// import Button from './component/button';
-// import Checkbox from './component/checkbox';
-// import Radio from './component/radio';
-// import Select from './component/select';
-// import Select2 from './component/select2';
-// // import Dropdown from './component/dropdown';
-// import Textarea from './component/textarea';
-import {Form, Input, Button, Checkbox, Radio, Select, Select2, Textarea} from '../index.js';
+import {Form, Input, Button, Checkbox, Radio, Select, Select2, Textarea} from '../component/index.js';
+// import {Form, Input, Button, Checkbox, Radio, Select, Select2, Textarea} from '../dist/cs-validation.js';
 
 export default class App extends React.Component {
 	/**
