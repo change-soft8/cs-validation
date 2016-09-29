@@ -1,7 +1,7 @@
 import React from 'react';
 
-import {Form, Input, Button, Checkbox, Radio, Select, Select2, Textarea} from '../component/index.js';
-// import {Form, Input, Button, Checkbox, Radio, Select, Select2, Textarea} from '../dist/cs-validation.js';
+import {Form, Input, Button, Checkbox, Radio, Select, Select2, Textarea} from '../src/index.js';
+// import {Form, Input, Button, Checkbox, Radio, Select, Select2, Textarea} from 'CsValidation';
 
 export default class App extends React.Component {
 	/**
@@ -102,10 +102,9 @@ export default class App extends React.Component {
 	            "taskName": {
 	                "minlength": 2,
 	                "maxlength": 10,
-	                // "rangelength": [4, 8]
 	            },
 	            "inviteFriend": {
-	                "mobile|email|loginName": ""
+	                "minlength": 4
 	            },
 	            "password2": {
 	                "equalTo": "[name='password']"
