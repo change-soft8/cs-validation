@@ -12,7 +12,7 @@
     "publish": "npm run dist && npm run adduser",
     "adduser": "npm owner add shenqingling && npm owner add songhuaqian"
   },
-  "author": "shenqingling",
+  "author": "cs_team",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.11.4",
@@ -23,7 +23,6 @@
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-0": "^6.5.0",
     "css-loader": "^0.23.1",
-    "path": "^0.12.7",
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
     "react-router": "^2.6.1",
