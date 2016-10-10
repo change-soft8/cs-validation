@@ -59,7 +59,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.Textarea = exports.Select2 = exports.Select = exports.Radio = exports.Checkbox = exports.Button = exports.Input = exports.Form = undefined;
+	exports.InputGroup = exports.Textarea = exports.Select2 = exports.Select = exports.Radio = exports.Checkbox = exports.Button = exports.Input = exports.Form = undefined;
 
 	var _form = __webpack_require__(1);
 
@@ -70,7 +70,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 
-	var _input = __webpack_require__(9);
+	var _input = __webpack_require__(5);
 
 	Object.defineProperty(exports, 'Input', {
 	  enumerable: true,
@@ -79,7 +79,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 
-	var _button = __webpack_require__(8);
+	var _button = __webpack_require__(4);
 
 	Object.defineProperty(exports, 'Button', {
 	  enumerable: true,
@@ -88,7 +88,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 
-	var _checkbox = __webpack_require__(10);
+	var _checkbox = __webpack_require__(6);
 
 	Object.defineProperty(exports, 'Checkbox', {
 	  enumerable: true,
@@ -97,7 +97,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 
-	var _radio = __webpack_require__(11);
+	var _radio = __webpack_require__(7);
 
 	Object.defineProperty(exports, 'Radio', {
 	  enumerable: true,
@@ -106,7 +106,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 
-	var _select = __webpack_require__(12);
+	var _select = __webpack_require__(8);
 
 	Object.defineProperty(exports, 'Select', {
 	  enumerable: true,
@@ -115,7 +115,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 
-	var _select2 = __webpack_require__(13);
+	var _select2 = __webpack_require__(9);
 
 	Object.defineProperty(exports, 'Select2', {
 	  enumerable: true,
@@ -124,7 +124,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 
-	var _textarea = __webpack_require__(16);
+	var _textarea = __webpack_require__(10);
 
 	Object.defineProperty(exports, 'Textarea', {
 	  enumerable: true,
@@ -133,7 +133,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 
-	var _validation = __webpack_require__(17);
+	var _inputgroup = __webpack_require__(11);
+
+	Object.defineProperty(exports, 'InputGroup', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_inputgroup).default;
+	  }
+	});
+
+	var _validation = __webpack_require__(12);
 
 	var _validation2 = _interopRequireDefault(_validation);
 
@@ -157,15 +166,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _form = __webpack_require__(3);
-
-	var _form2 = _interopRequireDefault(_form);
-
-	var _utils = __webpack_require__(7);
+	var _utils = __webpack_require__(3);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
-	var _button = __webpack_require__(8);
+	var _button = __webpack_require__(4);
 
 	var _button2 = _interopRequireDefault(_button);
 
@@ -324,6 +329,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    if (element.is(':radio') || element.is(':checkbox') || element.is('select')) {
 	                        // 将错误信息添加当前元素的父结点后面
 	                        error.appendTo(element.parent());
+	                    } else if (element.is(':input') && element.parent().hasClass('input-group')) {
+	                        // 将错误信息添加当前元素的父结点后面
+	                        error.insertAfter(element.parent());
 	                    } else {
 	                        // 将错误信息直接添加在后面
 	                        error.insertAfter(element);
@@ -477,16 +485,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	                { ref: 'form', key: _utils2.default.getKey('form') },
 	                _react2.default.Children.map(this.props.children, function (element, i) {
 	                    // 设置 disabled 属性
-	                    var props = Object.assign({}, element.props);
-	                    props.disabled = props.enabled ? '' : props.disabled || disabled;
-	                    if (props.type == 'submit') {
-	                        var othersb = _objectWithoutProperties(props, []);
+	                    if (element) {
+	                        var props = Object.assign({}, element.props);
+	                        props.disabled = props.enabled ? '' : props.disabled || disabled;
+	                        if (props.type == 'submit') {
+	                            var othersb = _objectWithoutProperties(props, []);
 
-	                        return _react2.default.createElement(_button2.default, _extends({ ref: 'button' }, othersb));
-	                    } else {
-	                        var ele = Object.assign({}, element);
-	                        ele.props = props;
-	                        return ele;
+	                            return _react2.default.createElement(_button2.default, _extends({ ref: 'button' }, othersb));
+	                        } else {
+	                            var ele = Object.assign({}, element);
+	                            ele.props = props;
+	                            return ele;
+	                        }
 	                    }
 	                })
 	            );
@@ -509,354 +519,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 3 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(4);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(6)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js!./form.css", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js!./form.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 4 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(5)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "label.error {\r\n    color: #D95C5C !important;\r\n    font-weight: normal;\r\n}\r\n\r\nform.text-class .form-control[disabled] {\r\n    border: none;\r\n    background-color: #FFF;\r\n    box-shadow: none;\r\n    cursor: context-menu;\r\n}\r\n\r\nform.text-class .select2-container--default.select2-container--disabled .select2-selection--multiple {\r\n    border: none;\r\n    background: #FFF;\r\n}\r\n\r\nform.text-class .select2-container--default.select2-container--disabled .select2-selection--single {\r\n    border: none;\r\n    background: #FFF;\r\n}\r\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 5 */
-/***/ function(module, exports) {
-
-	/*
-		MIT License http://www.opensource.org/licenses/mit-license.php
-		Author Tobias Koppers @sokra
-	*/
-	// css base code, injected by the css-loader
-	module.exports = function() {
-		var list = [];
-
-		// return the list of modules as css string
-		list.toString = function toString() {
-			var result = [];
-			for(var i = 0; i < this.length; i++) {
-				var item = this[i];
-				if(item[2]) {
-					result.push("@media " + item[2] + "{" + item[1] + "}");
-				} else {
-					result.push(item[1]);
-				}
-			}
-			return result.join("");
-		};
-
-		// import a list of modules into the list
-		list.i = function(modules, mediaQuery) {
-			if(typeof modules === "string")
-				modules = [[null, modules, ""]];
-			var alreadyImportedModules = {};
-			for(var i = 0; i < this.length; i++) {
-				var id = this[i][0];
-				if(typeof id === "number")
-					alreadyImportedModules[id] = true;
-			}
-			for(i = 0; i < modules.length; i++) {
-				var item = modules[i];
-				// skip already imported module
-				// this implementation is not 100% perfect for weird media query combinations
-				//  when a module is imported multiple times with different media queries.
-				//  I hope this will never occur (Hey this way we have smaller bundles)
-				if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-					if(mediaQuery && !item[2]) {
-						item[2] = mediaQuery;
-					} else if(mediaQuery) {
-						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-					}
-					list.push(item);
-				}
-			}
-		};
-		return list;
-	};
-
-
-/***/ },
-/* 6 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*
-		MIT License http://www.opensource.org/licenses/mit-license.php
-		Author Tobias Koppers @sokra
-	*/
-	var stylesInDom = {},
-		memoize = function(fn) {
-			var memo;
-			return function () {
-				if (typeof memo === "undefined") memo = fn.apply(this, arguments);
-				return memo;
-			};
-		},
-		isOldIE = memoize(function() {
-			return /msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase());
-		}),
-		getHeadElement = memoize(function () {
-			return document.head || document.getElementsByTagName("head")[0];
-		}),
-		singletonElement = null,
-		singletonCounter = 0,
-		styleElementsInsertedAtTop = [];
-
-	module.exports = function(list, options) {
-		if(false) {
-			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
-		}
-
-		options = options || {};
-		// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
-		// tags it will allow on a page
-		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
-
-		// By default, add <style> tags to the bottom of <head>.
-		if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
-
-		var styles = listToStyles(list);
-		addStylesToDom(styles, options);
-
-		return function update(newList) {
-			var mayRemove = [];
-			for(var i = 0; i < styles.length; i++) {
-				var item = styles[i];
-				var domStyle = stylesInDom[item.id];
-				domStyle.refs--;
-				mayRemove.push(domStyle);
-			}
-			if(newList) {
-				var newStyles = listToStyles(newList);
-				addStylesToDom(newStyles, options);
-			}
-			for(var i = 0; i < mayRemove.length; i++) {
-				var domStyle = mayRemove[i];
-				if(domStyle.refs === 0) {
-					for(var j = 0; j < domStyle.parts.length; j++)
-						domStyle.parts[j]();
-					delete stylesInDom[domStyle.id];
-				}
-			}
-		};
-	}
-
-	function addStylesToDom(styles, options) {
-		for(var i = 0; i < styles.length; i++) {
-			var item = styles[i];
-			var domStyle = stylesInDom[item.id];
-			if(domStyle) {
-				domStyle.refs++;
-				for(var j = 0; j < domStyle.parts.length; j++) {
-					domStyle.parts[j](item.parts[j]);
-				}
-				for(; j < item.parts.length; j++) {
-					domStyle.parts.push(addStyle(item.parts[j], options));
-				}
-			} else {
-				var parts = [];
-				for(var j = 0; j < item.parts.length; j++) {
-					parts.push(addStyle(item.parts[j], options));
-				}
-				stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
-			}
-		}
-	}
-
-	function listToStyles(list) {
-		var styles = [];
-		var newStyles = {};
-		for(var i = 0; i < list.length; i++) {
-			var item = list[i];
-			var id = item[0];
-			var css = item[1];
-			var media = item[2];
-			var sourceMap = item[3];
-			var part = {css: css, media: media, sourceMap: sourceMap};
-			if(!newStyles[id])
-				styles.push(newStyles[id] = {id: id, parts: [part]});
-			else
-				newStyles[id].parts.push(part);
-		}
-		return styles;
-	}
-
-	function insertStyleElement(options, styleElement) {
-		var head = getHeadElement();
-		var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
-		if (options.insertAt === "top") {
-			if(!lastStyleElementInsertedAtTop) {
-				head.insertBefore(styleElement, head.firstChild);
-			} else if(lastStyleElementInsertedAtTop.nextSibling) {
-				head.insertBefore(styleElement, lastStyleElementInsertedAtTop.nextSibling);
-			} else {
-				head.appendChild(styleElement);
-			}
-			styleElementsInsertedAtTop.push(styleElement);
-		} else if (options.insertAt === "bottom") {
-			head.appendChild(styleElement);
-		} else {
-			throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
-		}
-	}
-
-	function removeStyleElement(styleElement) {
-		styleElement.parentNode.removeChild(styleElement);
-		var idx = styleElementsInsertedAtTop.indexOf(styleElement);
-		if(idx >= 0) {
-			styleElementsInsertedAtTop.splice(idx, 1);
-		}
-	}
-
-	function createStyleElement(options) {
-		var styleElement = document.createElement("style");
-		styleElement.type = "text/css";
-		insertStyleElement(options, styleElement);
-		return styleElement;
-	}
-
-	function createLinkElement(options) {
-		var linkElement = document.createElement("link");
-		linkElement.rel = "stylesheet";
-		insertStyleElement(options, linkElement);
-		return linkElement;
-	}
-
-	function addStyle(obj, options) {
-		var styleElement, update, remove;
-
-		if (options.singleton) {
-			var styleIndex = singletonCounter++;
-			styleElement = singletonElement || (singletonElement = createStyleElement(options));
-			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
-			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
-		} else if(obj.sourceMap &&
-			typeof URL === "function" &&
-			typeof URL.createObjectURL === "function" &&
-			typeof URL.revokeObjectURL === "function" &&
-			typeof Blob === "function" &&
-			typeof btoa === "function") {
-			styleElement = createLinkElement(options);
-			update = updateLink.bind(null, styleElement);
-			remove = function() {
-				removeStyleElement(styleElement);
-				if(styleElement.href)
-					URL.revokeObjectURL(styleElement.href);
-			};
-		} else {
-			styleElement = createStyleElement(options);
-			update = applyToTag.bind(null, styleElement);
-			remove = function() {
-				removeStyleElement(styleElement);
-			};
-		}
-
-		update(obj);
-
-		return function updateStyle(newObj) {
-			if(newObj) {
-				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
-					return;
-				update(obj = newObj);
-			} else {
-				remove();
-			}
-		};
-	}
-
-	var replaceText = (function () {
-		var textStore = [];
-
-		return function (index, replacement) {
-			textStore[index] = replacement;
-			return textStore.filter(Boolean).join('\n');
-		};
-	})();
-
-	function applyToSingletonTag(styleElement, index, remove, obj) {
-		var css = remove ? "" : obj.css;
-
-		if (styleElement.styleSheet) {
-			styleElement.styleSheet.cssText = replaceText(index, css);
-		} else {
-			var cssNode = document.createTextNode(css);
-			var childNodes = styleElement.childNodes;
-			if (childNodes[index]) styleElement.removeChild(childNodes[index]);
-			if (childNodes.length) {
-				styleElement.insertBefore(cssNode, childNodes[index]);
-			} else {
-				styleElement.appendChild(cssNode);
-			}
-		}
-	}
-
-	function applyToTag(styleElement, obj) {
-		var css = obj.css;
-		var media = obj.media;
-
-		if(media) {
-			styleElement.setAttribute("media", media)
-		}
-
-		if(styleElement.styleSheet) {
-			styleElement.styleSheet.cssText = css;
-		} else {
-			while(styleElement.firstChild) {
-				styleElement.removeChild(styleElement.firstChild);
-			}
-			styleElement.appendChild(document.createTextNode(css));
-		}
-	}
-
-	function updateLink(linkElement, obj) {
-		var css = obj.css;
-		var sourceMap = obj.sourceMap;
-
-		if(sourceMap) {
-			// http://stackoverflow.com/a/26603875
-			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
-		}
-
-		var blob = new Blob([css], { type: "text/css" });
-
-		var oldSrc = linkElement.href;
-
-		linkElement.href = URL.createObjectURL(blob);
-
-		if(oldSrc)
-			URL.revokeObjectURL(oldSrc);
-	}
-
-
-/***/ },
-/* 7 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -981,7 +643,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Utils;
 
 /***/ },
-/* 8 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1052,7 +714,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Button;
 
 /***/ },
-/* 9 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1115,13 +777,14 @@ return /******/ (function(modules) { // webpackBootstrap
 				var rule = _props.rule;
 				var label = _props.label;
 				var enabled = _props.enabled;
+				var labelhide = _props.labelhide;
 
-				var others = _objectWithoutProperties(_props, ['rule', 'label', 'enabled']);
+				var others = _objectWithoutProperties(_props, ['rule', 'label', 'enabled', 'labelhide']);
 
 				return _react2.default.createElement(
 					'div',
 					{ className: 'form-group' },
-					_react2.default.createElement(
+					labelhide ? '' : _react2.default.createElement(
 						'label',
 						{ htmlFor: rule },
 						label
@@ -1137,7 +800,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Input;
 
 /***/ },
-/* 10 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1185,13 +848,14 @@ return /******/ (function(modules) { // webpackBootstrap
 				var rule = _props.rule;
 				var datas = _props.datas;
 				var className = _props.className;
+				var labelhide = _props.labelhide;
 
-				var others = _objectWithoutProperties(_props, ["label", "rule", "datas", "className"]);
+				var others = _objectWithoutProperties(_props, ["label", "rule", "datas", "className", "labelhide"]);
 
 				return _react2.default.createElement(
 					"div",
 					{ className: "form-group checkbox-group" },
-					_react2.default.createElement(
+					labelhide ? '' : _react2.default.createElement(
 						"label",
 						null,
 						label
@@ -1221,7 +885,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Checkbox;
 
 /***/ },
-/* 11 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1265,13 +929,14 @@ return /******/ (function(modules) { // webpackBootstrap
 				var rule = _props.rule;
 				var datas = _props.datas;
 				var className = _props.className;
+				var labelhide = _props.labelhide;
 
-				var others = _objectWithoutProperties(_props, ["label", "rule", "datas", "className"]);
+				var others = _objectWithoutProperties(_props, ["label", "rule", "datas", "className", "labelhide"]);
 
 				return _react2.default.createElement(
 					"div",
 					{ className: "form-group radio-group" },
-					_react2.default.createElement(
+					labelhide ? '' : _react2.default.createElement(
 						"label",
 						null,
 						label
@@ -1300,7 +965,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Radio;
 
 /***/ },
-/* 12 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1344,13 +1009,14 @@ return /******/ (function(modules) { // webpackBootstrap
 				var rule = _props.rule;
 				var datas = _props.datas;
 				var enabled = _props.enabled;
+				var labelhide = _props.labelhide;
 
-				var others = _objectWithoutProperties(_props, ["label", "rule", "datas", "enabled"]);
+				var others = _objectWithoutProperties(_props, ["label", "rule", "datas", "enabled", "labelhide"]);
 
 				return _react2.default.createElement(
 					"div",
 					{ className: "form-group" },
-					_react2.default.createElement(
+					labelhide ? '' : _react2.default.createElement(
 						"label",
 						null,
 						label
@@ -1388,7 +1054,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Select;
 
 /***/ },
-/* 13 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1404,10 +1070,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
-
-	var _select = __webpack_require__(14);
-
-	var _select2 = _interopRequireDefault(_select);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1493,13 +1155,14 @@ return /******/ (function(modules) { // webpackBootstrap
 				var rule = _props.rule;
 				var datas = _props.datas;
 				var enabled = _props.enabled;
+				var labelhide = _props.labelhide;
 
-				var others = _objectWithoutProperties(_props, ["label", "rule", "datas", "enabled"]);
+				var others = _objectWithoutProperties(_props, ["label", "rule", "datas", "enabled", "labelhide"]);
 
 				return _react2.default.createElement(
 					"div",
 					{ className: "form-group" },
-					_react2.default.createElement(
+					labelhide ? '' : _react2.default.createElement(
 						"label",
 						{ htmlFor: rule },
 						label
@@ -1538,47 +1201,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Select2;
 
 /***/ },
-/* 14 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(15);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(6)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js!./select2.css", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js!./select2.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 15 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(5)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".img_24_24 {\r\n    width: 24px;\r\n    height: 24px;\r\n}\r\n\r\n.select2-container--default .select2-search--inline .select2-search__field{\r\n\tborder: none!important;\r\n}", ""]);
-
-	// exports
-
-
-/***/ },
-/* 16 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1620,13 +1243,14 @@ return /******/ (function(modules) { // webpackBootstrap
 				var _props = this.props;
 				var label = _props.label;
 				var rule = _props.rule;
+				var labelhide = _props.labelhide;
 
-				var others = _objectWithoutProperties(_props, ["label", "rule"]);
+				var others = _objectWithoutProperties(_props, ["label", "rule", "labelhide"]);
 
 				return _react2.default.createElement(
 					"div",
 					{ className: "form-group" },
-					_react2.default.createElement(
+					labelhide ? '' : _react2.default.createElement(
 						"label",
 						null,
 						label
@@ -1642,7 +1266,110 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Textarea;
 
 /***/ },
-/* 17 */
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var InputGroup = function (_React$Component) {
+		_inherits(InputGroup, _React$Component);
+
+		function InputGroup() {
+			var _ref;
+
+			var _temp, _this, _ret;
+
+			_classCallCheck(this, InputGroup);
+
+			for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+				args[_key] = arguments[_key];
+			}
+
+			return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = InputGroup.__proto__ || Object.getPrototypeOf(InputGroup)).call.apply(_ref, [this].concat(args))), _this), _this.state = { value: _this.props && _this.props.value || '' }, _temp), _possibleConstructorReturn(_this, _ret);
+		}
+
+		_createClass(InputGroup, [{
+			key: 'handleChange',
+
+
+			// ========================================= 自定义方法 =================================================
+			/**
+	   * [handleChange 输入框内容变化 触发事件]
+	   * @return        {[type]}                 [description]
+	   */
+			value: function handleChange() {
+				this.setState({ 'value': this.refs.sinput.value });
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var _props = this.props;
+				var rule = _props.rule;
+				var label = _props.label;
+				var enabled = _props.enabled;
+				var labelhide = _props.labelhide;
+				var pre = _props.pre;
+				var end = _props.end;
+
+				var others = _objectWithoutProperties(_props, ['rule', 'label', 'enabled', 'labelhide', 'pre', 'end']);
+
+				var test = "<input type='checkbox'>";
+				return _react2.default.createElement(
+					'div',
+					{ className: 'form-group' },
+					labelhide ? '' : _react2.default.createElement(
+						'label',
+						{ htmlFor: rule },
+						label
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'input-group' },
+						pre ? _react2.default.createElement(
+							'span',
+							{ className: 'input-group-addon' },
+							_react2.default.createElement('span', { dangerouslySetInnerHTML: { __html: pre } })
+						) : '',
+						_react2.default.createElement('input', _extends({ ref: 'sinput', type: 'text', className: 'form-control', name: rule }, others, { value: this.state.value, onChange: this.handleChange.bind(this) })),
+						end ? _react2.default.createElement(
+							'span',
+							{ className: 'input-group-addon' },
+							_react2.default.createElement('span', { dangerouslySetInnerHTML: { __html: end } })
+						) : ''
+					)
+				);
+			}
+		}]);
+
+		return InputGroup;
+	}(_react2.default.Component);
+
+	exports.default = InputGroup;
+
+/***/ },
+/* 12 */
 /***/ function(module, exports) {
 
 	"use strict";

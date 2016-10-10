@@ -1,7 +1,5 @@
 import React from "react";
 
-import style from "./select2.css";
-
 export default class Select2 extends React.Component {
 
     state = {placeholder: this.props.placeholder || '', data: this.props.datas} || {};
@@ -50,11 +48,11 @@ export default class Select2 extends React.Component {
 	}
 
 	render(){
-		let {label, rule, datas, enabled, ...others} = this.props;
+		let {label, rule, datas, enabled, labelhide, ...others} = this.props;
 
 		return (
 			<div className="form-group">
-				<label htmlFor={rule}>{label}</label>
+				{labelhide ? '' : <label htmlFor={rule}>{label}</label>}
 
 				<select className="js-states form-control" name={rule} {...others} ref="select">
 					{datas.map((select, i) => {

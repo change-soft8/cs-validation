@@ -3,11 +3,11 @@ import React from "react";
 export default class Select extends React.Component {
 	
 	render(){
-		let {label, rule, datas, enabled, ...others} = this.props;
+		let {label, rule, datas, enabled, labelhide, ...others} = this.props;
 
 		return (
 			<div className="form-group">
-				<label>{label}</label>
+				{labelhide ? '' : <label>{label}</label>}
 
 				<select className="form-control" name={rule} {...others}>
 					{datas.map((option, i) => {

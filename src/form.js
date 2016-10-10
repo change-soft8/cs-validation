@@ -1,8 +1,6 @@
 import React from 'react';
 
-import style from './form.css';
-
-import Utils from '../utils/utils';
+import Utils from './utils';
 
 import Button from './button';
 
@@ -140,7 +138,10 @@ export default class Form extends React.Component{
                 if (element.is(':radio') || element.is(':checkbox') || element.is('select')) {
                     // 将错误信息添加当前元素的父结点后面
                     error.appendTo(element.parent());
-                } else {
+                } else if(element.is(':input') && element.parent().hasClass('input-group')){
+                    // 将错误信息添加当前元素的父结点后面
+                    error.insertAfter(element.parent());
+                }else {
                     // 将错误信息直接添加在后面
                     error.insertAfter(element);
                 }

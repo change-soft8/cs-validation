@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Form, Input, Button, Checkbox, Radio, Select, Select2, Textarea} from '../src/index.js';
+import {Form, Input, Button, Checkbox, Radio, Select, Select2, Textarea} from '../../src/index.js';
 // import {Form, Input, Button, Checkbox, Radio, Select, Select2, Textarea} from 'CsValidation';
 
 export default class App extends React.Component {
@@ -75,16 +75,16 @@ export default class App extends React.Component {
 		}];
 
 		const dataSelect3 = [{
-			icon: './Hydrangeas.jpg',
+			icon: './china.png',
 			label: 'project1',
 			value: 'project1'
 		},{
-			icon: './Hydrangeas.jpg',
+			icon: './china.png',
 			label: 'project2',
 			value: 'project2',
 			selected: true
 		},{
-			icon: './Hydrangeas.jpg',
+			icon: './china.png',
 			label: 'project3',
 			value: 'project3'
 		},{

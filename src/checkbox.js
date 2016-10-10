@@ -6,11 +6,11 @@ export default class Checkbox extends React.Component {
 
 	render(){
 
-		const {label, rule, datas, className, ...others} = this.props;
+		const {label, rule, datas, className, labelhide, ...others} = this.props;
 
 		return (
 			<div className="form-group checkbox-group">
-				<label>{label}</label>
+				{labelhide ? '' : <label>{label}</label>}
 
 				{datas.map((check, i) => {
 					const {...othersc} = check;
