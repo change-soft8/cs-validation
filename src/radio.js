@@ -4,11 +4,11 @@ export default class Radio extends React.Component {
 
 	render(){
 
-		const {label, rule, datas, className, ...others} = this.props;
+		const {label, rule, datas, className, labelhide, ...others} = this.props;
 
 		return (
 			<div className="form-group radio-group">
-				<label>{label}</label>
+				{labelhide ? '' : <label>{label}</label>}
 
 				{datas.map((radio, i) => {
 					const {...othersr} = radio;

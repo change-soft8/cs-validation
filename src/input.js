@@ -14,10 +14,10 @@ export default class Input extends React.Component {
 	}
 
 	render(){
-		const { rule, label, enabled, ...others} = this.props;
+		const { rule, label, enabled, labelhide, ...others} = this.props;
 		return (
 			<div className="form-group">
-                <label htmlFor={rule}>{label}</label>
+				{labelhide ? '' : <label htmlFor={rule}>{label}</label>}
                 <input ref="sinput" type="text" className="form-control" name={rule} {...others} value={this.state.value} onChange={this.handleChange.bind(this)} />
             </div>
 		)

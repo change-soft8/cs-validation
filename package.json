@@ -1,14 +1,16 @@
 {
   "name": "cs-validation",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "验证组件",
-  "main": "dist/cs-validation.js",
+  "main": "build/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cd example && webpack --progress --colors",
-    "dist": "npm run dist:umd && npm run dist:umd:min",
+    "start:babel": "cd example/babel && webpack-dev-server --progress --colors",
+    "start:cdn": "cd example/cdn && webpack --progress --colors",
+    "dist": "rm -rf dist && npm run dist:umd && npm run dist:umd:min",
     "dist:umd": "webpack src/index.js dist/cs-validation.js",
     "dist:umd:min": "webpack src/index.js dist/cs-validation.min.js -p",
+    "build": "rm -rf build && babel src -d build",
     "publish": "npm run dist && npm run adduser",
     "adduser": "npm owner add shenqingling && npm owner add songhuaqian"
   },
