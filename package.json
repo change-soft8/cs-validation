@@ -1,6 +1,6 @@
 {
   "name": "cs-validation",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "验证组件",
   "main": "dist/cs-validation.js",
   "scripts": {
@@ -13,7 +13,7 @@
     "adduser": "npm owner add shenqingling && npm owner add songhuaqian"
   },
   "author": "cs_team",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.11.4",
     "babel-loader": "^6.2.4",
