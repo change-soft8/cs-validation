@@ -241,15 +241,17 @@ export default class Form extends React.Component{
 			<form ref="form" key={Utils.getKey('form')}>
                 {React.Children.map(this.props.children, (element, i) => {
                     // 设置 disabled 属性
-                    let props = Object.assign({}, element.props);
-                    props.disabled = props.enabled ? '' : (props.disabled || disabled);
-                    if(props.type == 'submit'){
-                        const {...othersb} = props;
-                        return (<Button ref="button" {...othersb} />);
-                    }else{
-                        let ele = Object.assign({}, element);
-                        ele.props = props;
-                        return ele;
+                    if(element){
+                        let props = Object.assign({}, element.props);
+                        props.disabled = props.enabled ? '' : (props.disabled || disabled);
+                        if(props.type == 'submit'){
+                            const {...othersb} = props;
+                            return (<Button ref="button" {...othersb} />);
+                        }else{
+                            let ele = Object.assign({}, element);
+                            ele.props = props;
+                            return ele;
+                        }
                     }
                 })}
 			</form>

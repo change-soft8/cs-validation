@@ -477,16 +477,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	                { ref: 'form', key: _utils2.default.getKey('form') },
 	                _react2.default.Children.map(this.props.children, function (element, i) {
 	                    // 设置 disabled 属性
-	                    var props = Object.assign({}, element.props);
-	                    props.disabled = props.enabled ? '' : props.disabled || disabled;
-	                    if (props.type == 'submit') {
-	                        var othersb = _objectWithoutProperties(props, []);
+	                    if (element) {
+	                        var props = Object.assign({}, element.props);
+	                        props.disabled = props.enabled ? '' : props.disabled || disabled;
+	                        if (props.type == 'submit') {
+	                            var othersb = _objectWithoutProperties(props, []);
 
-	                        return _react2.default.createElement(_button2.default, _extends({ ref: 'button' }, othersb));
-	                    } else {
-	                        var ele = Object.assign({}, element);
-	                        ele.props = props;
-	                        return ele;
+	                            return _react2.default.createElement(_button2.default, _extends({ ref: 'button' }, othersb));
+	                        } else {
+	                            var ele = Object.assign({}, element);
+	                            ele.props = props;
+	                            return ele;
+	                        }
 	                    }
 	                })
 	            );
