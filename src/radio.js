@@ -1,27 +1,15 @@
 import React from "react";
 
-export default class Radio extends React.Component {
+export default class RadioF extends React.Component {
 
 	render(){
-
-		const {label, rule, datas, className, labelhide, ...others} = this.props;
-
+		const {rule, datas, className, ...others} = this.props;
 		return (
-			<div className="form-group radio-group">
-				{labelhide ? '' : <label>{label}</label>}
-
-				{datas.map((radio, i) => {
-					const {...othersr} = radio;
-
-					return(
-						<div className={(className ? className : 'radio') + (others.disabled ? ' disabled' : '')} key={i}>
-						  	<label className={className ? className : 'radio'}>
-						    	<input type="radio" name={rule} {...othersr} {...others} /> 
-						    	{radio.label}
-						  	</label>
-						</div>
-					);
-				})}
+			<div className={(className ? className : 'radio') + (others.disabled ? ' disabled' : '')}>
+			  	<label className={className ? className : 'radio'}>
+			    	<input type="radio" name={rule} {...others} defaultChecked={datas.defaultChecked} /> 
+			    	{datas.label || datas.value}
+			  	</label>
 			</div>
 		)
 	}

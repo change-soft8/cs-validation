@@ -1,6 +1,6 @@
 {
   "name": "cs-validation",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "验证组件",
   "main": "build/index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "dist:umd": "webpack src/index.js dist/cs-validation.js",
     "dist:umd:min": "webpack src/index.js dist/cs-validation.min.js -p",
     "build": "rm -rf build && babel src -d build",
-    "publish": "npm run dist && npm run adduser",
+    "publish": "npm run adduser",
     "adduser": "npm owner add shenqingling && npm owner add songhuaqian"
   },
   "author": "cs_team",

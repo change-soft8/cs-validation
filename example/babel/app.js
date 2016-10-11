@@ -1,7 +1,7 @@
 import React from 'react';
 
-import {Form, Input, Button, Checkbox, Radio, Select, Select2, Textarea, InputGroup} from '../../build/index.js';
-// import {Form, Input, Button, Checkbox, Radio, Select, Select2, Textarea, InputGroup} from '../../src/index.js';
+import {Form, Input, InputF, Button, Checkbox, CheckboxF, Radio, RadioF, Select, SelectF ,Select2, SelectF2, Textarea, TextareaF, InputGroup, InputGroupF} from '../../build/index.js';
+// import {Form, Input, InputF, Button, Checkbox, CheckboxF, Radio, RadioF, Select, SelectF ,Select2, SelectF2, Textarea, TextareaF, InputGroup, InputGroupF} from '../../src/index.js';
 
 export default class App extends React.Component {
 	/**
@@ -18,6 +18,12 @@ export default class App extends React.Component {
 	}
 
 	render() {
+
+		const dataC = {
+			label: 'Check me out1',
+			value: 'checkone',
+			defaultChecked: true
+		};
 
 		const dataCheck= [{
 			label: 'Check me out1',
@@ -140,19 +146,25 @@ export default class App extends React.Component {
 		          	<div className="panel-body">
 		          		{/**  callback={this.closeModal.bind(this)}  **/}
 			            <Form entityOper="task-insert" config={config}>
-				            <Input rule="taskName" label="任务名" required value="默认任务名" labelhide />
-				            <InputGroup rule="taskName1" label="任务名1" required value="默认任务名1" pre="<span class='glyphicon glyphicon-user'></span>" end="<input type='checkbox'>" />
-				            <Input rule="inviteFriend" label="手机、邮箱或用户名" placeholder="请输入手机、邮箱或用户名" enabled />
-				            <Checkbox rule="taskLabel" label="任务标签" datas={dataCheck}/>
-				            <Checkbox rule="requiredCheck" label="必选标签" datas={requiredCheck} required />
-				            <Radio rule="taskPrio" label="任务优先级" datas={dataCheck} />
-				            <Select rule="projectName" label="所属项目(select)" datas={dataSelect} required></Select>
-				            <Select2 rule="projectName2" label="所属项目(单选)" datas={dataSelect2} placeholder="请选择项目" required enabled></Select2>
-				            <Select2 rule="projectName3" label="所属项目(多选)" datas={dataSelect2} placeholder="请选择项目" multiple></Select2>
-				            <Select2 rule="projectName4" label="所属项目(带图片)" datas={dataSelect3} placeholder="请选择项目"></Select2>
-				            <Input rule="password" label="密码" required />
-				            <Input rule="password2" label="确认密码" required />
-				            { /** <Textarea rule="taskDetail" label="任务详情" required placeholder="请输入任务详情" rows="3"></Textarea> */ }
+				            <Input rule="taskName2" required value="默认任务名2" />
+				            <InputF rule="taskName" label="任务名" required value="默认任务名" labelhide />
+				            <InputGroupF rule="taskName1" label="任务名1" required value="默认任务名1" pre="<span class='glyphicon glyphicon-user'></span>" end="<input type='checkbox'>" />
+				            <InputF rule="inviteFriend" label="手机、邮箱或用户名" placeholder="请输入手机、邮箱或用户名" enabled />
+				            <Checkbox rule="taskLabel2" datas={dataC}/>
+				            <CheckboxF rule="taskLabel" label="任务标签" datas={dataCheck}/>
+				            <CheckboxF rule="requiredCheck" label="必选标签" datas={requiredCheck} required />
+				            <Radio rule="taskPrio1" datas={dataC} />
+				            <RadioF rule="taskPrio" label="任务优先级" datas={dataCheck} />
+				            <Select rule="projectName" datas={dataSelect} required></Select>
+				            <SelectF rule="projectName" label="所属项目(select)" datas={dataSelect} required></SelectF>
+				            <Select2 rule="projectName22" datas={dataSelect2} placeholder="请选择项目" required></Select2>
+				            <SelectF2 rule="projectName2" label="所属项目(单选)" datas={dataSelect2} placeholder="请选择项目" required></SelectF2>
+				            <SelectF2 rule="projectName3" label="所属项目(多选)" datas={dataSelect2} placeholder="请选择项目" multiple></SelectF2>
+				            <SelectF2 rule="projectName4" label="所属项目(带图片)" datas={dataSelect3} placeholder="请选择项目"></SelectF2>
+				            <InputF type="password" rule="password" label="密码" required />
+				            <InputF rule="password2" label="确认密码" required />
+				            { /** <Textarea rule="taskDetail1" label="任务详情" required placeholder="请输入任务详情1" rows="3"></Textarea> */}
+				            { /** <TextareaF rule="taskDetail" label="任务详情" required placeholder="请输入任务详情" rows="3"></TextareaF> */}
 				            <Button type="submit" className="btn-primary" label="注册" />
 			            </Form>
 			          </div>

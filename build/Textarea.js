@@ -35,22 +35,11 @@ var Textarea = function (_React$Component) {
 		key: "render",
 		value: function render() {
 			var _props = this.props;
-			var label = _props.label;
 			var rule = _props.rule;
-			var labelhide = _props.labelhide;
 
-			var others = _objectWithoutProperties(_props, ["label", "rule", "labelhide"]);
+			var others = _objectWithoutProperties(_props, ["rule"]);
 
-			return _react2.default.createElement(
-				"div",
-				{ className: "form-group" },
-				labelhide ? '' : _react2.default.createElement(
-					"label",
-					null,
-					label
-				),
-				_react2.default.createElement("textarea", _extends({ className: "form-control", name: rule, style: { resize: "none" } }, others))
-			);
+			return _react2.default.createElement("textarea", _extends({ className: "form-control", name: rule, style: { resize: "none" } }, others));
 		}
 	}]);
 
