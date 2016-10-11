@@ -12,6 +12,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _Input = require('./Input');
+
+var _Input2 = _interopRequireDefault(_Input);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
@@ -22,39 +26,40 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Checkbox = function (_React$Component) {
-	_inherits(Checkbox, _React$Component);
+var InputF = function (_React$Component) {
+	_inherits(InputF, _React$Component);
 
-	function Checkbox() {
-		_classCallCheck(this, Checkbox);
+	function InputF() {
+		_classCallCheck(this, InputF);
 
-		return _possibleConstructorReturn(this, (Checkbox.__proto__ || Object.getPrototypeOf(Checkbox)).apply(this, arguments));
+		return _possibleConstructorReturn(this, (InputF.__proto__ || Object.getPrototypeOf(InputF)).apply(this, arguments));
 	}
 
-	_createClass(Checkbox, [{
+	_createClass(InputF, [{
 		key: 'render',
 		value: function render() {
 			var _props = this.props;
 			var rule = _props.rule;
-			var datas = _props.datas;
-			var className = _props.className;
+			var label = _props.label;
+			var enabled = _props.enabled;
+			var labelhide = _props.labelhide;
 
-			var others = _objectWithoutProperties(_props, ['rule', 'datas', 'className']);
+			var others = _objectWithoutProperties(_props, ['rule', 'label', 'enabled', 'labelhide']);
 
 			return _react2.default.createElement(
 				'div',
-				{ className: (className ? className : 'checkbox') + (others.disabled ? ' disabled' : '') },
-				_react2.default.createElement(
+				{ className: 'form-group' },
+				labelhide ? '' : _react2.default.createElement(
 					'label',
-					{ className: className ? className : 'checkbox' },
-					_react2.default.createElement('input', _extends({ type: 'checkbox', name: rule }, others, { defaultChecked: datas.defaultChecked })),
-					datas.label || datas.value
-				)
+					{ htmlFor: rule },
+					label
+				),
+				_react2.default.createElement(_Input2.default, _extends({ rule: rule }, others))
 			);
 		}
 	}]);
 
-	return Checkbox;
+	return InputF;
 }(_react2.default.Component);
 
-exports.default = Checkbox;
+exports.default = InputF;

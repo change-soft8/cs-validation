@@ -92,46 +92,34 @@ var Select2 = function (_React$Component) {
 		key: "render",
 		value: function render() {
 			var _props = this.props;
-			var label = _props.label;
 			var rule = _props.rule;
 			var datas = _props.datas;
-			var enabled = _props.enabled;
-			var labelhide = _props.labelhide;
 
-			var others = _objectWithoutProperties(_props, ["label", "rule", "datas", "enabled", "labelhide"]);
+			var others = _objectWithoutProperties(_props, ["rule", "datas"]);
 
 			return _react2.default.createElement(
-				"div",
-				{ className: "form-group" },
-				labelhide ? '' : _react2.default.createElement(
-					"label",
-					{ htmlFor: rule },
-					label
-				),
-				_react2.default.createElement(
-					"select",
-					_extends({ className: "js-states form-control", name: rule }, others, { ref: "select" }),
-					datas.map(function (select, i) {
-						var label = select.label;
-						var value = select.value;
-						var selected = select.selected;
+				"select",
+				_extends({ className: "js-states form-control", name: rule }, others, { ref: "select" }),
+				datas.map(function (select, i) {
+					var label = select.label;
+					var value = select.value;
+					var selected = select.selected;
 
-						var otherd = _objectWithoutProperties(select, ["label", "value", "selected"]);
+					var otherd = _objectWithoutProperties(select, ["label", "value", "selected"]);
 
-						// 将原生HTML的 selected="selected" 改成 select标签的 value="..."
+					// 将原生HTML的 selected="selected" 改成 select标签的 value="..."
 
 
-						if (selected) {
-							others.value = select.value;
-						}
+					if (selected) {
+						others.value = select.value;
+					}
 
-						return _react2.default.createElement(
-							"option",
-							_extends({ value: value, key: i }, otherd),
-							label
-						);
-					})
-				)
+					return _react2.default.createElement(
+						"option",
+						_extends({ value: value, key: i }, otherd),
+						label
+					);
+				})
 			);
 		}
 	}]);

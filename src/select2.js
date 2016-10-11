@@ -48,25 +48,21 @@ export default class Select2 extends React.Component {
 	}
 
 	render(){
-		let {label, rule, datas, enabled, labelhide, ...others} = this.props;
+		let {rule, datas, ...others} = this.props;
 
 		return (
-			<div className="form-group">
-				{labelhide ? '' : <label htmlFor={rule}>{label}</label>}
+			<select className="js-states form-control" name={rule} {...others} ref="select">
+				{datas.map((select, i) => {
+					const {label, value, selected, ...otherd} = select;
 
-				<select className="js-states form-control" name={rule} {...others} ref="select">
-					{datas.map((select, i) => {
-						const {label, value, selected, ...otherd} = select;
+					// 将原生HTML的 selected="selected" 改成 select标签的 value="..."
+					if(selected){
+						others.value = select.value;
+					}
 
-						// 将原生HTML的 selected="selected" 改成 select标签的 value="..."
-						if(selected){
-							others.value = select.value;
-						}
-
-						return (<option value={value} key={i} {...otherd}>{label}</option>);
-					})}
-				</select>
-			</div>
+					return (<option value={value} key={i} {...otherd}>{label}</option>);
+				})}
+			</select>
 		)
 	}
 }

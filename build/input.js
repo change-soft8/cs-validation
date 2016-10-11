@@ -56,22 +56,11 @@ var Input = function (_React$Component) {
 		value: function render() {
 			var _props = this.props;
 			var rule = _props.rule;
-			var label = _props.label;
 			var enabled = _props.enabled;
-			var labelhide = _props.labelhide;
 
-			var others = _objectWithoutProperties(_props, ['rule', 'label', 'enabled', 'labelhide']);
+			var others = _objectWithoutProperties(_props, ['rule', 'enabled']);
 
-			return _react2.default.createElement(
-				'div',
-				{ className: 'form-group' },
-				labelhide ? '' : _react2.default.createElement(
-					'label',
-					{ htmlFor: rule },
-					label
-				),
-				_react2.default.createElement('input', _extends({ ref: 'sinput', type: 'text', className: 'form-control', name: rule }, others, { value: this.state.value, onChange: this.handleChange.bind(this) }))
-			);
+			return _react2.default.createElement('input', _extends({ ref: 'sinput', className: 'form-control', name: rule }, others, { value: this.state.value, onChange: this.handleChange.bind(this) }));
 		}
 	}]);
 
