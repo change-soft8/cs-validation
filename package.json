@@ -1,6 +1,6 @@
 {
   "name": "cs-validation",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "验证组件",
   "main": "build/index.js",
   "scripts": {
