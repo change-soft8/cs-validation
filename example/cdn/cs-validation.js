@@ -59,7 +59,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.InputGroupF = exports.InputGroup = exports.TextareaF = exports.Textarea = exports.SelectF2 = exports.Select2 = exports.SelectF = exports.Select = exports.RadioF = exports.Radio = exports.CheckboxF = exports.Checkbox = exports.Button = exports.InputF = exports.Input = exports.Form = undefined;
+	exports.InputGroup = exports.Textarea = exports.Select2 = exports.Select = exports.Radio = exports.Checkbox = exports.Button = exports.Input = exports.Form = undefined;
 
 	var _Form = __webpack_require__(1);
 
@@ -76,15 +76,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  enumerable: true,
 	  get: function get() {
 	    return _interopRequireDefault(_Input).default;
-	  }
-	});
-
-	var _InputF = __webpack_require__(6);
-
-	Object.defineProperty(exports, 'InputF', {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_InputF).default;
 	  }
 	});
 
@@ -106,30 +97,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 
-	var _CheckboxF = __webpack_require__(9);
-
-	Object.defineProperty(exports, 'CheckboxF', {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_CheckboxF).default;
-	  }
-	});
-
 	var _Radio = __webpack_require__(10);
 
 	Object.defineProperty(exports, 'Radio', {
 	  enumerable: true,
 	  get: function get() {
 	    return _interopRequireDefault(_Radio).default;
-	  }
-	});
-
-	var _RadioF = __webpack_require__(11);
-
-	Object.defineProperty(exports, 'RadioF', {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_RadioF).default;
 	  }
 	});
 
@@ -142,30 +115,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 
-	var _SelectF = __webpack_require__(13);
-
-	Object.defineProperty(exports, 'SelectF', {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_SelectF).default;
-	  }
-	});
-
 	var _Select2 = __webpack_require__(14);
 
 	Object.defineProperty(exports, 'Select2', {
 	  enumerable: true,
 	  get: function get() {
 	    return _interopRequireDefault(_Select2).default;
-	  }
-	});
-
-	var _SelectF2 = __webpack_require__(15);
-
-	Object.defineProperty(exports, 'SelectF2', {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_SelectF2).default;
 	  }
 	});
 
@@ -178,30 +133,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 
-	var _TextareaF = __webpack_require__(17);
-
-	Object.defineProperty(exports, 'TextareaF', {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_TextareaF).default;
-	  }
-	});
-
 	var _InputGroup = __webpack_require__(18);
 
 	Object.defineProperty(exports, 'InputGroup', {
 	  enumerable: true,
 	  get: function get() {
 	    return _interopRequireDefault(_InputGroup).default;
-	  }
-	});
-
-	var _InputGroupF = __webpack_require__(19);
-
-	Object.defineProperty(exports, 'InputGroupF', {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_InputGroupF).default;
 	  }
 	});
 
@@ -282,6 +219,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'initForm',
 	        value: function initForm() {
+	            var _this2 = this;
+
 	            var datas = {};
 	            var checkValue = [];
 	            var pname = void 0;
@@ -316,11 +255,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    }
 
 	                    Object.assign(datas, data);
-
-	                    // 绑定回车事件
-	                    this.keyEnter(input);
 	                }
 	            }
+
+	            // 绑定回车事件
+	            this.keyEnter(this.refs.form, function () {
+	                _this2.validator.form();
+	            });
+
 	            return datas;
 	        }
 
@@ -332,7 +274,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: 'initFormValidation',
 	        value: function initFormValidation() {
-	            var _this2 = this;
+	            var _this3 = this;
 
 	            // 实体 和 操作
 	            if (this.props.entityOper) {
@@ -383,7 +325,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                // 验证通过
 	                submitHandler: function submitHandler(form, event) {
 	                    console.log("Submitted!");
-	                    _this2.formSubmit();
+	                    _this3.formSubmit();
 	                },
 	                // 验证错误
 	                errorPlacement: function errorPlacement(error, element) {
@@ -494,46 +436,77 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        /**
-	         * [keyEnter 表单对事件的处理-回车自动定位下一输入框]
-	         * @param         {[type]}                 element [description]
-	         * @return        {[type]}                         [description]
+	         * [keyEnter description]
+	         * @param         {[type]}                 select [表单选择器]
+	         * @param         {[type]}                 func   [回调方法]
+	         * @return        {[type]}                        [description]
 	         */
 
 	    }, {
 	        key: 'keyEnter',
-	        value: function keyEnter(element) {
-	            var _this3 = this;
+	        value: function keyEnter(select, func) {
+	            var uuid = this.uuid();
+	            $(select).attr('id', uuid);
+	            var ips = $(select).find('input:checked,input:selected,[name][type!=checkbox][type!=radio]');
+	            var l = ips.length;
+	            if (l < 1) {
+	                ips = $(select);
+	                l = 1;
+	            }
+	            ips.each(function (i) {
+	                var _this4 = this;
 
-	            // 绑定 keyup 事件
-	            $(element).keyup(function (e) {
-	                if (13 == e.keyCode) {
-	                    // 回车事件
-	                    // 下个表单元素
-	                    var next = $(e.target.parentElement).next();
-	                    if (next.hasClass('form-group')) {
-	                        // 表单元素
-	                        var ele = void 0;
-	                        // 拿到 表单输入元素
-	                        do {
-	                            ele = next.find('input[type!=checkbox][type!=radio][type!=search]');
-	                            ele = ele.length ? ele : next.find('textarea');
-	                            next = next.next();
-	                        } while (!ele.length && next.hasClass('form-group'));
-
-	                        if (ele.length) {
-	                            // 有表单输入元素
-	                            ele.focus();
+	                var end = false;
+	                if (i == ips.length - 1) end = true;
+	                $(this).attr({
+	                    'enter_index': i,
+	                    'enter_end': end
+	                });
+	                $(this).keyup(function (event) {
+	                    if (13 == event.keyCode) {
+	                        var e = $(_this4).attr('enter_end');
+	                        var a = $(_this4).attr('enter_finish');
+	                        var ei = parseInt($(_this4).attr('enter_index'));
+	                        if (a || e == 'true') {
+	                            func();
 	                        } else {
-	                            // 没有表单输入元素，进行验证
-	                            _this3.validator.form();
+	                            $('#' + uuid + ' [enter_index="' + (ei + 1) + '"]')[0].focus();
 	                        }
-	                    } else {
-	                        // 按钮元素，进行验证
-	                        _this3.validator.form();
 	                    }
-	                    return false;
-	                }
+	                });
 	            });
+	        }
+
+	        /**
+	         * [clear 表单验证清除]
+	         * @return        {[type]}                 [description]
+	         */
+
+	    }, {
+	        key: 'clear',
+	        value: function clear() {
+	            this.validator.resetForm();
+	        }
+
+	        /**
+	         * [uuid 生成]
+	         * @return        {[type]}                 [uuid]
+	         */
+
+	    }, {
+	        key: 'uuid',
+	        value: function uuid() {
+	            var s = [];
+	            var hexDigits = "0123456789abcdef";
+	            for (var i = 0; i < 36; i++) {
+	                s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+	            }
+	            s[14] = "4"; // bits 12-15 of the time_hi_and_version field to 0010
+	            s[19] = hexDigits.substr(s[19] & 0x3 | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
+	            s[8] = s[13] = s[18] = s[23] = "-";
+
+	            var uuid = s.join("");
+	            return uuid;
 	        }
 	    }, {
 	        key: 'render',
@@ -794,84 +767,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	var _InputBase = __webpack_require__(6);
 
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Input = function (_React$Component) {
-		_inherits(Input, _React$Component);
-
-		function Input() {
-			var _ref;
-
-			var _temp, _this, _ret;
-
-			_classCallCheck(this, Input);
-
-			for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-				args[_key] = arguments[_key];
-			}
-
-			return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Input.__proto__ || Object.getPrototypeOf(Input)).call.apply(_ref, [this].concat(args))), _this), _this.state = { value: _this.props && _this.props.value || '' }, _temp), _possibleConstructorReturn(_this, _ret);
-		}
-
-		_createClass(Input, [{
-			key: 'handleChange',
-
-
-			// ========================================= 自定义方法 =================================================
-			/**
-	   * [handleChange 输入框内容变化 触发事件]
-	   * @return        {[type]}                 [description]
-	   */
-			value: function handleChange() {
-				this.setState({ 'value': this.refs.sinput.value });
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				var _props = this.props;
-				var rule = _props.rule;
-				var enabled = _props.enabled;
-
-				var others = _objectWithoutProperties(_props, ['rule', 'enabled']);
-
-				return _react2.default.createElement('input', _extends({ ref: 'sinput', className: 'form-control', name: rule }, others, { value: this.state.value, onChange: this.handleChange.bind(this) }));
-			}
-		}]);
-
-		return Input;
-	}(_react2.default.Component);
-
-	exports.default = Input;
-
-/***/ },
-/* 6 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _Input = __webpack_require__(5);
-
-	var _Input2 = _interopRequireDefault(_Input);
+	var _InputBase2 = _interopRequireDefault(_InputBase);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -899,20 +797,25 @@ return /******/ (function(modules) { // webpackBootstrap
 				var rule = _props.rule;
 				var label = _props.label;
 				var enabled = _props.enabled;
-				var labelhide = _props.labelhide;
+				var labelHide = _props.labelHide;
+				var formGroup = _props.formGroup;
 
-				var others = _objectWithoutProperties(_props, ['rule', 'label', 'enabled', 'labelhide']);
+				var others = _objectWithoutProperties(_props, ['rule', 'label', 'enabled', 'labelHide', 'formGroup']);
 
-				return _react2.default.createElement(
-					'div',
-					{ className: 'form-group' },
-					labelhide ? '' : _react2.default.createElement(
-						'label',
-						{ htmlFor: rule },
-						label
-					),
-					_react2.default.createElement(_Input2.default, _extends({ rule: rule }, others))
-				);
+				if (formGroup) {
+					return _react2.default.createElement(
+						'div',
+						{ className: 'form-group' },
+						_react2.default.createElement(
+							'label',
+							{ className: labelHide ? 'sr-only' : null, htmlFor: rule },
+							label
+						),
+						_react2.default.createElement(_InputBase2.default, _extends({ rule: rule }, others))
+					);
+				} else {
+					return _react2.default.createElement(_InputBase2.default, _extends({ rule: rule }, others));
+				}
 			}
 		}]);
 
@@ -920,6 +823,81 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react2.default.Component);
 
 	exports.default = InputF;
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var InputBase = function (_React$Component) {
+		_inherits(InputBase, _React$Component);
+
+		function InputBase() {
+			var _ref;
+
+			var _temp, _this, _ret;
+
+			_classCallCheck(this, InputBase);
+
+			for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+				args[_key] = arguments[_key];
+			}
+
+			return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = InputBase.__proto__ || Object.getPrototypeOf(InputBase)).call.apply(_ref, [this].concat(args))), _this), _this.state = { value: _this.props && _this.props.value || '' }, _temp), _possibleConstructorReturn(_this, _ret);
+		}
+
+		_createClass(InputBase, [{
+			key: 'handleChange',
+
+
+			// ========================================= 自定义方法 =================================================
+			/**
+	   * [handleChange 输入框内容变化 触发事件]
+	   * @return        {[type]}                 [description]
+	   */
+			value: function handleChange() {
+				this.setState({ 'value': this.refs.sinput.value });
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var _props = this.props;
+				var rule = _props.rule;
+				var enabled = _props.enabled;
+
+				var others = _objectWithoutProperties(_props, ['rule', 'enabled']);
+
+				return _react2.default.createElement('input', _extends({ ref: 'sinput', className: 'form-control', name: rule }, others, { value: this.state.value, onChange: this.handleChange.bind(this) }));
+			}
+		}]);
+
+		return InputBase;
+	}(_react2.default.Component);
+
+	exports.default = InputBase;
 
 /***/ },
 /* 7 */
@@ -996,71 +974,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Checkbox = function (_React$Component) {
-		_inherits(Checkbox, _React$Component);
-
-		function Checkbox() {
-			_classCallCheck(this, Checkbox);
-
-			return _possibleConstructorReturn(this, (Checkbox.__proto__ || Object.getPrototypeOf(Checkbox)).apply(this, arguments));
-		}
-
-		_createClass(Checkbox, [{
-			key: 'render',
-			value: function render() {
-				var _props = this.props;
-				var rule = _props.rule;
-				var datas = _props.datas;
-				var className = _props.className;
-
-				var others = _objectWithoutProperties(_props, ['rule', 'datas', 'className']);
-
-				return _react2.default.createElement(
-					'div',
-					{ className: (className ? className : 'checkbox') + (others.disabled ? ' disabled' : '') },
-					_react2.default.createElement(
-						'label',
-						{ className: className ? className : 'checkbox' },
-						_react2.default.createElement('input', _extends({ type: 'checkbox', name: rule }, others, { defaultChecked: datas.defaultChecked })),
-						datas.label || datas.value
-					)
-				);
-			}
-		}]);
-
-		return Checkbox;
-	}(_react2.default.Component);
-
-	exports.default = Checkbox;
-
-/***/ },
-/* 9 */
-/***/ function(module, exports, __webpack_require__) {
-
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
@@ -1075,9 +988,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Checkbox = __webpack_require__(8);
+	var _CheckboxBase = __webpack_require__(9);
 
-	var _Checkbox2 = _interopRequireDefault(_Checkbox);
+	var _CheckboxBase2 = _interopRequireDefault(_CheckboxBase);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1105,22 +1018,27 @@ return /******/ (function(modules) { // webpackBootstrap
 				var label = _props.label;
 				var rule = _props.rule;
 				var datas = _props.datas;
-				var labelhide = _props.labelhide;
+				var labelHide = _props.labelHide;
+				var formGroup = _props.formGroup;
 
-				var others = _objectWithoutProperties(_props, ["label", "rule", "datas", "labelhide"]);
+				var others = _objectWithoutProperties(_props, ["label", "rule", "datas", "labelHide", "formGroup"]);
 
-				return _react2.default.createElement(
-					"div",
-					{ className: "form-group checkbox-group" },
-					labelhide ? '' : _react2.default.createElement(
-						"label",
-						null,
-						label
-					),
-					datas.map(function (check, i) {
-						return _react2.default.createElement(_Checkbox2.default, _extends({ name: rule, datas: check }, others, { key: i }));
-					})
-				);
+				if (formGroup) {
+					return _react2.default.createElement(
+						"div",
+						{ className: "form-group checkbox-group" },
+						_react2.default.createElement(
+							"label",
+							{ className: labelHide ? 'sr-only' : null },
+							label
+						),
+						datas.map(function (check, i) {
+							return _react2.default.createElement(_CheckboxBase2.default, _extends({ name: rule, datas: check }, others, { key: i }));
+						})
+					);
+				} else {
+					return _react2.default.createElement(_CheckboxBase2.default, _extends({ name: rule, datas: datas }, others));
+				}
 			}
 		}]);
 
@@ -1130,7 +1048,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = CheckboxF;
 
 /***/ },
-/* 10 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1157,16 +1075,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var RadioF = function (_React$Component) {
-		_inherits(RadioF, _React$Component);
+	var CheckboxBase = function (_React$Component) {
+		_inherits(CheckboxBase, _React$Component);
 
-		function RadioF() {
-			_classCallCheck(this, RadioF);
+		function CheckboxBase() {
+			_classCallCheck(this, CheckboxBase);
 
-			return _possibleConstructorReturn(this, (RadioF.__proto__ || Object.getPrototypeOf(RadioF)).apply(this, arguments));
+			return _possibleConstructorReturn(this, (CheckboxBase.__proto__ || Object.getPrototypeOf(CheckboxBase)).apply(this, arguments));
 		}
 
-		_createClass(RadioF, [{
+		_createClass(CheckboxBase, [{
 			key: 'render',
 			value: function render() {
 				var _props = this.props;
@@ -1178,24 +1096,24 @@ return /******/ (function(modules) { // webpackBootstrap
 
 				return _react2.default.createElement(
 					'div',
-					{ className: (className ? className : 'radio') + (others.disabled ? ' disabled' : '') },
+					{ className: (className ? className : 'checkbox') + (others.disabled ? ' disabled' : '') },
 					_react2.default.createElement(
 						'label',
-						{ className: className ? className : 'radio' },
-						_react2.default.createElement('input', _extends({ type: 'radio', name: rule }, others, { defaultChecked: datas.defaultChecked })),
+						{ className: className ? className : 'checkbox' },
+						_react2.default.createElement('input', _extends({ type: 'checkbox', name: rule }, others, { defaultChecked: datas.defaultChecked })),
 						datas.label || datas.value
 					)
 				);
 			}
 		}]);
 
-		return RadioF;
+		return CheckboxBase;
 	}(_react2.default.Component);
 
-	exports.default = RadioF;
+	exports.default = CheckboxBase;
 
 /***/ },
-/* 11 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1212,9 +1130,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Radio = __webpack_require__(10);
+	var _RadioBase = __webpack_require__(11);
 
-	var _Radio2 = _interopRequireDefault(_Radio);
+	var _RadioBase2 = _interopRequireDefault(_RadioBase);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1242,22 +1160,27 @@ return /******/ (function(modules) { // webpackBootstrap
 				var label = _props.label;
 				var rule = _props.rule;
 				var datas = _props.datas;
-				var labelhide = _props.labelhide;
+				var labelHide = _props.labelHide;
+				var formGroup = _props.formGroup;
 
-				var others = _objectWithoutProperties(_props, ["label", "rule", "datas", "labelhide"]);
+				var others = _objectWithoutProperties(_props, ["label", "rule", "datas", "labelHide", "formGroup"]);
 
-				return _react2.default.createElement(
-					"div",
-					{ className: "form-group radio-group" },
-					labelhide ? '' : _react2.default.createElement(
-						"label",
-						null,
-						label
-					),
-					datas.map(function (radio, i) {
-						return _react2.default.createElement(_Radio2.default, _extends({ name: rule, datas: radio }, others, { key: i }));
-					})
-				);
+				if (formGroup) {
+					return _react2.default.createElement(
+						"div",
+						{ className: "form-group radio-group" },
+						_react2.default.createElement(
+							"label",
+							{ className: labelHide ? 'sr-only' : null },
+							label
+						),
+						datas.map(function (radio, i) {
+							return _react2.default.createElement(_RadioBase2.default, _extends({ name: rule, datas: radio }, others, { key: i }));
+						})
+					);
+				} else {
+					return _react2.default.createElement(_RadioBase2.default, _extends({ name: rule, datas: datas }, others));
+				}
 			}
 		}]);
 
@@ -1267,7 +1190,143 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = RadioF;
 
 /***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var RadioBase = function (_React$Component) {
+		_inherits(RadioBase, _React$Component);
+
+		function RadioBase() {
+			_classCallCheck(this, RadioBase);
+
+			return _possibleConstructorReturn(this, (RadioBase.__proto__ || Object.getPrototypeOf(RadioBase)).apply(this, arguments));
+		}
+
+		_createClass(RadioBase, [{
+			key: 'render',
+			value: function render() {
+				var _props = this.props;
+				var rule = _props.rule;
+				var datas = _props.datas;
+				var className = _props.className;
+
+				var others = _objectWithoutProperties(_props, ['rule', 'datas', 'className']);
+
+				return _react2.default.createElement(
+					'div',
+					{ className: (className ? className : 'radio') + (others.disabled ? ' disabled' : '') },
+					_react2.default.createElement(
+						'label',
+						{ className: className ? className : 'radio' },
+						_react2.default.createElement('input', _extends({ type: 'radio', name: rule }, others, { defaultChecked: datas.defaultChecked })),
+						datas.label || datas.value
+					)
+				);
+			}
+		}]);
+
+		return RadioBase;
+	}(_react2.default.Component);
+
+	exports.default = RadioBase;
+
+/***/ },
 /* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _SelectBase = __webpack_require__(13);
+
+	var _SelectBase2 = _interopRequireDefault(_SelectBase);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SelectF = function (_React$Component) {
+		_inherits(SelectF, _React$Component);
+
+		function SelectF() {
+			_classCallCheck(this, SelectF);
+
+			return _possibleConstructorReturn(this, (SelectF.__proto__ || Object.getPrototypeOf(SelectF)).apply(this, arguments));
+		}
+
+		_createClass(SelectF, [{
+			key: "render",
+			value: function render() {
+				var _props = this.props;
+				var label = _props.label;
+				var labelHide = _props.labelHide;
+				var formGroup = _props.formGroup;
+
+				var others = _objectWithoutProperties(_props, ["label", "labelHide", "formGroup"]);
+
+				if (formGroup) {
+					return _react2.default.createElement(
+						"div",
+						{ className: "form-group" },
+						_react2.default.createElement(
+							"label",
+							{ className: labelHide ? 'sr-only' : null },
+							label
+						),
+						_react2.default.createElement(_SelectBase2.default, others)
+					);
+				} else {
+					return _react2.default.createElement(_SelectBase2.default, others);
+				}
+			}
+		}]);
+
+		return SelectF;
+	}(_react2.default.Component);
+
+	exports.default = SelectF;
+
+/***/ },
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1294,16 +1353,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Select = function (_React$Component) {
-		_inherits(Select, _React$Component);
+	var SelectBase = function (_React$Component) {
+		_inherits(SelectBase, _React$Component);
 
-		function Select() {
-			_classCallCheck(this, Select);
+		function SelectBase() {
+			_classCallCheck(this, SelectBase);
 
-			return _possibleConstructorReturn(this, (Select.__proto__ || Object.getPrototypeOf(Select)).apply(this, arguments));
+			return _possibleConstructorReturn(this, (SelectBase.__proto__ || Object.getPrototypeOf(SelectBase)).apply(this, arguments));
 		}
 
-		_createClass(Select, [{
+		_createClass(SelectBase, [{
 			key: "render",
 			value: function render() {
 				var _props = this.props;
@@ -1337,13 +1396,13 @@ return /******/ (function(modules) { // webpackBootstrap
 			}
 		}]);
 
-		return Select;
+		return SelectBase;
 	}(_react2.default.Component);
 
-	exports.default = Select;
+	exports.default = SelectBase;
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1352,15 +1411,17 @@ return /******/ (function(modules) { // webpackBootstrap
 		value: true
 	});
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Select = __webpack_require__(12);
+	var _SelectBase = __webpack_require__(15);
 
-	var _Select2 = _interopRequireDefault(_Select);
+	var _SelectBase2 = _interopRequireDefault(_SelectBase);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1372,44 +1433,50 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var SelectF = function (_React$Component) {
-		_inherits(SelectF, _React$Component);
+	var SelectF2 = function (_React$Component) {
+		_inherits(SelectF2, _React$Component);
 
-		function SelectF() {
-			_classCallCheck(this, SelectF);
+		function SelectF2() {
+			_classCallCheck(this, SelectF2);
 
-			return _possibleConstructorReturn(this, (SelectF.__proto__ || Object.getPrototypeOf(SelectF)).apply(this, arguments));
+			return _possibleConstructorReturn(this, (SelectF2.__proto__ || Object.getPrototypeOf(SelectF2)).apply(this, arguments));
 		}
 
-		_createClass(SelectF, [{
+		_createClass(SelectF2, [{
 			key: "render",
 			value: function render() {
 				var _props = this.props;
 				var label = _props.label;
-				var labelhide = _props.labelhide;
+				var rule = _props.rule;
+				var labelHide = _props.labelHide;
+				var formGroup = _props.formGroup;
 
-				var others = _objectWithoutProperties(_props, ["label", "labelhide"]);
+				var others = _objectWithoutProperties(_props, ["label", "rule", "labelHide", "formGroup"]);
 
-				return _react2.default.createElement(
-					"div",
-					{ className: "form-group" },
-					labelhide ? '' : _react2.default.createElement(
-						"label",
-						null,
-						label
-					),
-					_react2.default.createElement(_Select2.default, others)
-				);
+				if (formGroup) {
+					return _react2.default.createElement(
+						"div",
+						{ className: "form-group" },
+						_react2.default.createElement(
+							"label",
+							{ className: labelHide ? 'sr-only' : null, htmlFor: rule },
+							label
+						),
+						_react2.default.createElement(_SelectBase2.default, others)
+					);
+				} else {
+					return _react2.default.createElement(_SelectBase2.default, _extends({ rule: rule }, others));
+				}
 			}
 		}]);
 
-		return SelectF;
+		return SelectF2;
 	}(_react2.default.Component);
 
-	exports.default = SelectF;
+	exports.default = SelectF2;
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1436,24 +1503,24 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Select2 = function (_React$Component) {
-		_inherits(Select2, _React$Component);
+	var Select2Base = function (_React$Component) {
+		_inherits(Select2Base, _React$Component);
 
-		function Select2() {
+		function Select2Base() {
 			var _ref;
 
 			var _temp, _this, _ret;
 
-			_classCallCheck(this, Select2);
+			_classCallCheck(this, Select2Base);
 
 			for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
 				args[_key] = arguments[_key];
 			}
 
-			return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Select2.__proto__ || Object.getPrototypeOf(Select2)).call.apply(_ref, [this].concat(args))), _this), _this.state = { placeholder: _this.props.placeholder || '', data: _this.props.datas } || {}, _temp), _possibleConstructorReturn(_this, _ret);
+			return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Select2Base.__proto__ || Object.getPrototypeOf(Select2Base)).call.apply(_ref, [this].concat(args))), _this), _this.state = { placeholder: _this.props.placeholder || '', data: _this.props.datas } || {}, _temp), _possibleConstructorReturn(_this, _ret);
 		}
 
-		_createClass(Select2, [{
+		_createClass(Select2Base, [{
 			key: "componentDidMount",
 			value: function componentDidMount() {
 				var _this2 = this;
@@ -1538,77 +1605,10 @@ return /******/ (function(modules) { // webpackBootstrap
 			}
 		}]);
 
-		return Select2;
+		return Select2Base;
 	}(_react2.default.Component);
 
-	exports.default = Select2;
-
-/***/ },
-/* 15 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _Select = __webpack_require__(14);
-
-	var _Select2 = _interopRequireDefault(_Select);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var SelectF2 = function (_React$Component) {
-		_inherits(SelectF2, _React$Component);
-
-		function SelectF2() {
-			_classCallCheck(this, SelectF2);
-
-			return _possibleConstructorReturn(this, (SelectF2.__proto__ || Object.getPrototypeOf(SelectF2)).apply(this, arguments));
-		}
-
-		_createClass(SelectF2, [{
-			key: "render",
-			value: function render() {
-				var _props = this.props;
-				var label = _props.label;
-				var rule = _props.rule;
-				var labelhide = _props.labelhide;
-
-				var others = _objectWithoutProperties(_props, ["label", "rule", "labelhide"]);
-
-				return _react2.default.createElement(
-					"div",
-					{ className: "form-group" },
-					labelhide ? '' : _react2.default.createElement(
-						"label",
-						{ htmlFor: rule },
-						label
-					),
-					_react2.default.createElement(_Select2.default, others)
-				);
-			}
-		}]);
-
-		return SelectF2;
-	}(_react2.default.Component);
-
-	exports.default = SelectF2;
+	exports.default = Select2Base;
 
 /***/ },
 /* 16 */
@@ -1620,69 +1620,15 @@ return /******/ (function(modules) { // webpackBootstrap
 		value: true
 	});
 
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	var _TextareaBase = __webpack_require__(17);
 
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Textarea = function (_React$Component) {
-		_inherits(Textarea, _React$Component);
-
-		function Textarea() {
-			_classCallCheck(this, Textarea);
-
-			return _possibleConstructorReturn(this, (Textarea.__proto__ || Object.getPrototypeOf(Textarea)).apply(this, arguments));
-		}
-
-		_createClass(Textarea, [{
-			key: "render",
-			value: function render() {
-				var _props = this.props;
-				var rule = _props.rule;
-
-				var others = _objectWithoutProperties(_props, ["rule"]);
-
-				return _react2.default.createElement("textarea", _extends({ className: "form-control", name: rule, style: { resize: "none" } }, others));
-			}
-		}]);
-
-		return Textarea;
-	}(_react2.default.Component);
-
-	exports.default = Textarea;
-
-/***/ },
-/* 17 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _Textarea = __webpack_require__(16);
-
-	var _Textarea2 = _interopRequireDefault(_Textarea);
+	var _TextareaBase2 = _interopRequireDefault(_TextareaBase);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1708,20 +1654,25 @@ return /******/ (function(modules) { // webpackBootstrap
 			value: function render() {
 				var _props = this.props;
 				var label = _props.label;
-				var labelhide = _props.labelhide;
+				var labelHide = _props.labelHide;
+				var formGroup = _props.formGroup;
 
-				var others = _objectWithoutProperties(_props, ["label", "labelhide"]);
+				var others = _objectWithoutProperties(_props, ["label", "labelHide", "formGroup"]);
 
-				return _react2.default.createElement(
-					"div",
-					{ className: "form-group" },
-					labelhide ? '' : _react2.default.createElement(
-						"label",
-						null,
-						label
-					),
-					_react2.default.createElement(_Textarea2.default, others)
-				);
+				if (formGroup) {
+					return _react2.default.createElement(
+						"div",
+						{ className: "form-group" },
+						_react2.default.createElement(
+							"label",
+							{ className: labelHide ? 'sr-only' : null },
+							label
+						),
+						_react2.default.createElement(_TextareaBase2.default, others)
+					);
+				} else {
+					return _react2.default.createElement(_TextareaBase2.default, others);
+				}
 			}
 		}]);
 
@@ -1731,24 +1682,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = TextareaF;
 
 /***/ },
-/* 18 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
-
-	var _Input = __webpack_require__(5);
-
-	var _Input2 = _interopRequireDefault(_Input);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1760,49 +1709,34 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var InputGroup = function (_React$Component) {
-		_inherits(InputGroup, _React$Component);
+	var TextareaBase = function (_React$Component) {
+		_inherits(TextareaBase, _React$Component);
 
-		function InputGroup() {
-			_classCallCheck(this, InputGroup);
+		function TextareaBase() {
+			_classCallCheck(this, TextareaBase);
 
-			return _possibleConstructorReturn(this, (InputGroup.__proto__ || Object.getPrototypeOf(InputGroup)).apply(this, arguments));
+			return _possibleConstructorReturn(this, (TextareaBase.__proto__ || Object.getPrototypeOf(TextareaBase)).apply(this, arguments));
 		}
 
-		_createClass(InputGroup, [{
-			key: 'render',
+		_createClass(TextareaBase, [{
+			key: "render",
 			value: function render() {
 				var _props = this.props;
-				var pre = _props.pre;
-				var end = _props.end;
+				var rule = _props.rule;
 
-				var others = _objectWithoutProperties(_props, ['pre', 'end']);
+				var others = _objectWithoutProperties(_props, ["rule"]);
 
-				return _react2.default.createElement(
-					'div',
-					{ className: 'input-group' },
-					pre ? _react2.default.createElement(
-						'span',
-						{ className: 'input-group-addon' },
-						_react2.default.createElement('span', { dangerouslySetInnerHTML: { __html: pre } })
-					) : '',
-					_react2.default.createElement(_Input2.default, others),
-					end ? _react2.default.createElement(
-						'span',
-						{ className: 'input-group-addon' },
-						_react2.default.createElement('span', { dangerouslySetInnerHTML: { __html: end } })
-					) : ''
-				);
+				return _react2.default.createElement("textarea", _extends({ className: "form-control", name: rule, style: { resize: "none" } }, others));
 			}
 		}]);
 
-		return InputGroup;
+		return TextareaBase;
 	}(_react2.default.Component);
 
-	exports.default = InputGroup;
+	exports.default = TextareaBase;
 
 /***/ },
-/* 19 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1819,9 +1753,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Input = __webpack_require__(5);
+	var _InputGroupBase = __webpack_require__(19);
 
-	var _Input2 = _interopRequireDefault(_Input);
+	var _InputGroupBase2 = _interopRequireDefault(_InputGroupBase);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1848,36 +1782,25 @@ return /******/ (function(modules) { // webpackBootstrap
 				var _props = this.props;
 				var rule = _props.rule;
 				var label = _props.label;
-				var labelhide = _props.labelhide;
-				var pre = _props.pre;
-				var end = _props.end;
+				var labelHide = _props.labelHide;
+				var formGroup = _props.formGroup;
 
-				var others = _objectWithoutProperties(_props, ['rule', 'label', 'labelhide', 'pre', 'end']);
+				var others = _objectWithoutProperties(_props, ['rule', 'label', 'labelHide', 'formGroup']);
 
-				return _react2.default.createElement(
-					'div',
-					{ className: 'form-group' },
-					labelhide ? '' : _react2.default.createElement(
-						'label',
-						{ htmlFor: rule },
-						label
-					),
-					_react2.default.createElement(
+				if (formGroup) {
+					return _react2.default.createElement(
 						'div',
-						{ className: 'input-group' },
-						pre ? _react2.default.createElement(
-							'span',
-							{ className: 'input-group-addon' },
-							_react2.default.createElement('span', { dangerouslySetInnerHTML: { __html: pre } })
-						) : '',
-						_react2.default.createElement(_Input2.default, _extends({ rule: rule }, others)),
-						end ? _react2.default.createElement(
-							'span',
-							{ className: 'input-group-addon' },
-							_react2.default.createElement('span', { dangerouslySetInnerHTML: { __html: end } })
-						) : ''
-					)
-				);
+						{ className: 'form-group' },
+						_react2.default.createElement(
+							'label',
+							{ className: labelHide ? 'sr-only' : null, htmlFor: rule },
+							label
+						),
+						_react2.default.createElement(_InputGroupBase2.default, _extends({ rule: rule }, others))
+					);
+				} else {
+					return _react2.default.createElement(_InputGroupBase2.default, _extends({ rule: rule }, others));
+				}
 			}
 		}]);
 
@@ -1885,6 +1808,77 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react2.default.Component);
 
 	exports.default = InputGroupF;
+
+/***/ },
+/* 19 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _InputBase = __webpack_require__(6);
+
+	var _InputBase2 = _interopRequireDefault(_InputBase);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var InputGroupBase = function (_React$Component) {
+		_inherits(InputGroupBase, _React$Component);
+
+		function InputGroupBase() {
+			_classCallCheck(this, InputGroupBase);
+
+			return _possibleConstructorReturn(this, (InputGroupBase.__proto__ || Object.getPrototypeOf(InputGroupBase)).apply(this, arguments));
+		}
+
+		_createClass(InputGroupBase, [{
+			key: 'render',
+			value: function render() {
+				var _props = this.props;
+				var pre = _props.pre;
+				var end = _props.end;
+
+				var others = _objectWithoutProperties(_props, ['pre', 'end']);
+
+				return _react2.default.createElement(
+					'div',
+					{ className: 'input-group' },
+					pre ? _react2.default.createElement(
+						'span',
+						{ className: 'input-group-addon' },
+						_react2.default.createElement('span', { dangerouslySetInnerHTML: { __html: pre } })
+					) : '',
+					_react2.default.createElement(_InputBase2.default, others),
+					end ? _react2.default.createElement(
+						'span',
+						{ className: 'input-group-addon' },
+						_react2.default.createElement('span', { dangerouslySetInnerHTML: { __html: end } })
+					) : ''
+				);
+			}
+		}]);
+
+		return InputGroupBase;
+	}(_react2.default.Component);
+
+	exports.default = InputGroupBase;
 
 /***/ },
 /* 20 */

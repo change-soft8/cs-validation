@@ -4,13 +4,15 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
+
+var _SelectBase = require("./SelectBase");
+
+var _SelectBase2 = _interopRequireDefault(_SelectBase);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22,50 +24,43 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Select = function (_React$Component) {
-	_inherits(Select, _React$Component);
+var SelectF = function (_React$Component) {
+	_inherits(SelectF, _React$Component);
 
-	function Select() {
-		_classCallCheck(this, Select);
+	function SelectF() {
+		_classCallCheck(this, SelectF);
 
-		return _possibleConstructorReturn(this, (Select.__proto__ || Object.getPrototypeOf(Select)).apply(this, arguments));
+		return _possibleConstructorReturn(this, (SelectF.__proto__ || Object.getPrototypeOf(SelectF)).apply(this, arguments));
 	}
 
-	_createClass(Select, [{
+	_createClass(SelectF, [{
 		key: "render",
 		value: function render() {
 			var _props = this.props;
-			var rule = _props.rule;
-			var datas = _props.datas;
+			var label = _props.label;
+			var labelHide = _props.labelHide;
+			var formGroup = _props.formGroup;
 
-			var others = _objectWithoutProperties(_props, ["rule", "datas"]);
+			var others = _objectWithoutProperties(_props, ["label", "labelHide", "formGroup"]);
 
-			return _react2.default.createElement(
-				"select",
-				_extends({ className: "form-control", name: rule }, others),
-				datas.map(function (option, i) {
-					var hide = option.hide;
-					var selected = option.selected;
-
-					var otherss = _objectWithoutProperties(option, ["hide", "selected"]);
-
-					// 将原生HTML的 selected="selected" 改成 select标签的 value="..."
-
-
-					if (selected) {
-						others.value = option.value;
-					}
-					return _react2.default.createElement(
-						"option",
-						_extends({ key: i, className: hide ? 'hidden' : null }, otherss),
-						option.label
-					);
-				})
-			);
+			if (formGroup) {
+				return _react2.default.createElement(
+					"div",
+					{ className: "form-group" },
+					_react2.default.createElement(
+						"label",
+						{ className: labelHide ? 'sr-only' : null },
+						label
+					),
+					_react2.default.createElement(_SelectBase2.default, others)
+				);
+			} else {
+				return _react2.default.createElement(_SelectBase2.default, others);
+			}
 		}
 	}]);
 
-	return Select;
+	return SelectF;
 }(_react2.default.Component);
 
-exports.default = Select;
+exports.default = SelectF;

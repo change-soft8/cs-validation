@@ -67,10 +67,15 @@ export default class Form extends React.Component{
 
 	        	Object.assign(datas, data);
 
-                // 绑定回车事件
-                this.keyEnter(input);
+                
         	}
         }
+
+        // 绑定回车事件
+        this.keyEnter(this.refs.form, ()=>{
+            this.validator.form();
+        });
+
         return datas;
 	}
 
@@ -199,41 +204,66 @@ export default class Form extends React.Component{
     }
 
     /**
-     * [keyEnter 表单对事件的处理-回车自动定位下一输入框]
-     * @param         {[type]}                 element [description]
-     * @return        {[type]}                         [description]
+     * [keyEnter description]
+     * @param         {[type]}                 select [表单选择器]
+     * @param         {[type]}                 func   [回调方法]
+     * @return        {[type]}                        [description]
      */
-    keyEnter(element){
-        // 绑定 keyup 事件
-        $(element).keyup((e) => {
-            if (13 == e.keyCode) {
-                // 回车事件
-                // 下个表单元素
-                let next = $(e.target.parentElement).next();
-                if(next.hasClass('form-group')){
-                    // 表单元素
-                    let ele;
-                    // 拿到 表单输入元素
-                    do{
-                        ele = next.find('input[type!=checkbox][type!=radio][type!=search]');
-                        ele = ele.length ? ele : next.find('textarea');
-                        next = next.next();
-                    }while(!ele.length && next.hasClass('form-group'));
-                    
-                    if(ele.length){
-                        // 有表单输入元素
-                        ele.focus();
-                    }else {
-                        // 没有表单输入元素，进行验证
-                        this.validator.form();
+    keyEnter(select, func) {
+        let uuid = this.uuid();
+        $(select).attr('id', uuid);
+        let ips = $(select).find('input:checked,input:selected,[name][type!=checkbox][type!=radio]');
+        let l = ips.length;
+        if (l < 1) {
+            ips = $(select);
+            l = 1;
+        }
+        ips.each(function(i) {
+            let end = false;
+            if (i == ips.length - 1) end = true;
+            $(this).attr({
+                'enter_index': i,
+                'enter_end': end
+            });
+            $(this).keyup((event) => {
+                if (13 == event.keyCode) {
+                    let e = $(this).attr('enter_end');
+                    let a = $(this).attr('enter_finish');
+                    let ei = parseInt($(this).attr('enter_index'));
+                    if (a || e == 'true') {
+                        func();
+                    } else {
+                        $('#' + uuid + ' [enter_index="' + (ei + 1) + '"]')[0].focus();
                     }
-                }else{
-                    // 按钮元素，进行验证
-                    this.validator.form();
                 }
-                return false;
-            }
+            });
         });
+    }
+
+    /**
+     * [clear 表单验证清除]
+     * @return        {[type]}                 [description]
+     */
+    clear(){
+        this.validator.resetForm();
+    }
+
+    /**
+     * [uuid 生成]
+     * @return        {[type]}                 [uuid]
+     */
+    uuid() {
+        var s = [];
+        var hexDigits = "0123456789abcdef";
+        for (var i = 0; i < 36; i++) {
+            s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+        }
+        s[14] = "4";  // bits 12-15 of the time_hi_and_version field to 0010
+        s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);  // bits 6-7 of the clock_seq_hi_and_reserved to 01
+        s[8] = s[13] = s[18] = s[23] = "-";
+     
+        var uuid = s.join("");
+        return uuid;
     }
 
 	render(){

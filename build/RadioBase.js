@@ -12,10 +12,6 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Input = require('./Input');
-
-var _Input2 = _interopRequireDefault(_Input);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
@@ -26,55 +22,39 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var InputGroupF = function (_React$Component) {
-	_inherits(InputGroupF, _React$Component);
+var RadioBase = function (_React$Component) {
+	_inherits(RadioBase, _React$Component);
 
-	function InputGroupF() {
-		_classCallCheck(this, InputGroupF);
+	function RadioBase() {
+		_classCallCheck(this, RadioBase);
 
-		return _possibleConstructorReturn(this, (InputGroupF.__proto__ || Object.getPrototypeOf(InputGroupF)).apply(this, arguments));
+		return _possibleConstructorReturn(this, (RadioBase.__proto__ || Object.getPrototypeOf(RadioBase)).apply(this, arguments));
 	}
 
-	_createClass(InputGroupF, [{
+	_createClass(RadioBase, [{
 		key: 'render',
 		value: function render() {
 			var _props = this.props;
 			var rule = _props.rule;
-			var label = _props.label;
-			var labelhide = _props.labelhide;
-			var pre = _props.pre;
-			var end = _props.end;
+			var datas = _props.datas;
+			var className = _props.className;
 
-			var others = _objectWithoutProperties(_props, ['rule', 'label', 'labelhide', 'pre', 'end']);
+			var others = _objectWithoutProperties(_props, ['rule', 'datas', 'className']);
 
 			return _react2.default.createElement(
 				'div',
-				{ className: 'form-group' },
-				labelhide ? '' : _react2.default.createElement(
-					'label',
-					{ htmlFor: rule },
-					label
-				),
+				{ className: (className ? className : 'radio') + (others.disabled ? ' disabled' : '') },
 				_react2.default.createElement(
-					'div',
-					{ className: 'input-group' },
-					pre ? _react2.default.createElement(
-						'span',
-						{ className: 'input-group-addon' },
-						_react2.default.createElement('span', { dangerouslySetInnerHTML: { __html: pre } })
-					) : '',
-					_react2.default.createElement(_Input2.default, _extends({ rule: rule }, others)),
-					end ? _react2.default.createElement(
-						'span',
-						{ className: 'input-group-addon' },
-						_react2.default.createElement('span', { dangerouslySetInnerHTML: { __html: end } })
-					) : ''
+					'label',
+					{ className: className ? className : 'radio' },
+					_react2.default.createElement('input', _extends({ type: 'radio', name: rule }, others, { defaultChecked: datas.defaultChecked })),
+					datas.label || datas.value
 				)
 			);
 		}
 	}]);
 
-	return InputGroupF;
+	return RadioBase;
 }(_react2.default.Component);
 
-exports.default = InputGroupF;
+exports.default = RadioBase;

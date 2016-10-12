@@ -1,22 +1,21 @@
 import React from 'react';
+import InputBase from './InputBase';
 
-export default class Input extends React.Component {
-
-    state = {value: this.props && this.props.value || ''};
-
-	// ========================================= 自定义方法 =================================================
-	/**
-	 * [handleChange 输入框内容变化 触发事件]
-	 * @return        {[type]}                 [description]
-	 */
-	handleChange(){
-		this.setState({'value': this.refs.sinput.value});
-	}
-
+export default class InputF extends React.Component {
+	
 	render(){
-		const { rule, enabled, ...others} = this.props;
-		return (
-            <input ref="sinput" className="form-control" name={rule} {...others} value={this.state.value} onChange={this.handleChange.bind(this)} />
-		)
+		const { rule, label, enabled, labelHide, formGroup, ...others} = this.props;
+		if(formGroup){
+			return (
+				<div className="form-group">
+					<label className={labelHide ? 'sr-only' : null} htmlFor={rule}>{label}</label>
+	            	<InputBase rule={rule} {...others} />
+	            </div>
+			)
+		}else{
+			return (
+	            <InputBase rule={rule} {...others} />
+			)
+		}
 	}
 }

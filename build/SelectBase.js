@@ -12,10 +12,6 @@ var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Checkbox = require("./Checkbox");
-
-var _Checkbox2 = _interopRequireDefault(_Checkbox);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
@@ -26,42 +22,50 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var CheckboxF = function (_React$Component) {
-	_inherits(CheckboxF, _React$Component);
+var SelectBase = function (_React$Component) {
+	_inherits(SelectBase, _React$Component);
 
-	function CheckboxF() {
-		_classCallCheck(this, CheckboxF);
+	function SelectBase() {
+		_classCallCheck(this, SelectBase);
 
-		return _possibleConstructorReturn(this, (CheckboxF.__proto__ || Object.getPrototypeOf(CheckboxF)).apply(this, arguments));
+		return _possibleConstructorReturn(this, (SelectBase.__proto__ || Object.getPrototypeOf(SelectBase)).apply(this, arguments));
 	}
 
-	_createClass(CheckboxF, [{
+	_createClass(SelectBase, [{
 		key: "render",
 		value: function render() {
 			var _props = this.props;
-			var label = _props.label;
 			var rule = _props.rule;
 			var datas = _props.datas;
-			var labelhide = _props.labelhide;
 
-			var others = _objectWithoutProperties(_props, ["label", "rule", "datas", "labelhide"]);
+			var others = _objectWithoutProperties(_props, ["rule", "datas"]);
 
 			return _react2.default.createElement(
-				"div",
-				{ className: "form-group checkbox-group" },
-				labelhide ? '' : _react2.default.createElement(
-					"label",
-					null,
-					label
-				),
-				datas.map(function (check, i) {
-					return _react2.default.createElement(_Checkbox2.default, _extends({ name: rule, datas: check }, others, { key: i }));
+				"select",
+				_extends({ className: "form-control", name: rule }, others),
+				datas.map(function (option, i) {
+					var hide = option.hide;
+					var selected = option.selected;
+
+					var otherss = _objectWithoutProperties(option, ["hide", "selected"]);
+
+					// 将原生HTML的 selected="selected" 改成 select标签的 value="..."
+
+
+					if (selected) {
+						others.value = option.value;
+					}
+					return _react2.default.createElement(
+						"option",
+						_extends({ key: i, className: hide ? 'hidden' : null }, otherss),
+						option.label
+					);
 				})
 			);
 		}
 	}]);
 
-	return CheckboxF;
+	return SelectBase;
 }(_react2.default.Component);
 
-exports.default = CheckboxF;
+exports.default = SelectBase;
