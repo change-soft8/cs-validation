@@ -1,16 +1,27 @@
 import React from "react";
+import RadioBase from "./RadioBase";
 
 export default class RadioF extends React.Component {
 
 	render(){
-		const {rule, datas, className, ...others} = this.props;
-		return (
-			<div className={(className ? className : 'radio') + (others.disabled ? ' disabled' : '')}>
-			  	<label className={className ? className : 'radio'}>
-			    	<input type="radio" name={rule} {...others} defaultChecked={datas.defaultChecked} /> 
-			    	{datas.label || datas.value}
-			  	</label>
-			</div>
-		)
+
+		const {label, rule, datas, labelHide, formGroup, ...others} = this.props;
+
+		if(formGroup){
+			return (
+				<div className="form-group radio-group">
+					<label className={labelHide ? 'sr-only' : null}>{label}</label>
+					{datas.map((radio, i) => {
+						return(
+							<RadioBase name={rule} datas={radio} {...others}  key={i} />
+						);
+					})}
+				</div>
+			)
+		}else{
+			return (
+				<RadioBase name={rule} datas={datas} {...others} />
+			)
+		}
 	}
 }

@@ -4,13 +4,15 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
+
+var _TextareaBase = require("./TextareaBase");
+
+var _TextareaBase2 = _interopRequireDefault(_TextareaBase);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22,28 +24,43 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Textarea = function (_React$Component) {
-	_inherits(Textarea, _React$Component);
+var TextareaF = function (_React$Component) {
+	_inherits(TextareaF, _React$Component);
 
-	function Textarea() {
-		_classCallCheck(this, Textarea);
+	function TextareaF() {
+		_classCallCheck(this, TextareaF);
 
-		return _possibleConstructorReturn(this, (Textarea.__proto__ || Object.getPrototypeOf(Textarea)).apply(this, arguments));
+		return _possibleConstructorReturn(this, (TextareaF.__proto__ || Object.getPrototypeOf(TextareaF)).apply(this, arguments));
 	}
 
-	_createClass(Textarea, [{
+	_createClass(TextareaF, [{
 		key: "render",
 		value: function render() {
 			var _props = this.props;
-			var rule = _props.rule;
+			var label = _props.label;
+			var labelHide = _props.labelHide;
+			var formGroup = _props.formGroup;
 
-			var others = _objectWithoutProperties(_props, ["rule"]);
+			var others = _objectWithoutProperties(_props, ["label", "labelHide", "formGroup"]);
 
-			return _react2.default.createElement("textarea", _extends({ className: "form-control", name: rule, style: { resize: "none" } }, others));
+			if (formGroup) {
+				return _react2.default.createElement(
+					"div",
+					{ className: "form-group" },
+					_react2.default.createElement(
+						"label",
+						{ className: labelHide ? 'sr-only' : null },
+						label
+					),
+					_react2.default.createElement(_TextareaBase2.default, others)
+				);
+			} else {
+				return _react2.default.createElement(_TextareaBase2.default, others);
+			}
 		}
 	}]);
 
-	return Textarea;
+	return TextareaF;
 }(_react2.default.Component);
 
-exports.default = Textarea;
+exports.default = TextareaF;

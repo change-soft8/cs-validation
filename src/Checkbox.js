@@ -1,16 +1,26 @@
 import React from "react";
+import CheckboxBase from "./CheckboxBase";
 
-export default class Checkbox extends React.Component {
+export default class CheckboxF extends React.Component {
 
 	render(){
-		const {rule, datas, className, ...others} = this.props;
-		return (
-			<div className={(className ? className : 'checkbox') + (others.disabled ? ' disabled' : '')}>
-			    <label className={className ? className : 'checkbox'}>
-			    	<input type="checkbox" name={rule} {...others} defaultChecked={datas.defaultChecked} />
-			    	{datas.label || datas.value}
-			    </label>
-			</div>
-		)
+		const {label, rule, datas, labelHide, formGroup, ...others} = this.props;
+		if(formGroup){
+			return (
+				<div className="form-group checkbox-group">
+					<label className={labelHide ? 'sr-only' : null}>{label}</label>
+
+					{datas.map((check, i) => {
+						return(
+							<CheckboxBase name={rule} datas={check} {...others}  key={i}/>
+						);
+					})}
+				</div>
+			)
+		}else{
+			return (
+				<CheckboxBase name={rule} datas={datas} {...others}/>
+			)
+		}
 	}
 }

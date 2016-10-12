@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
 	value: true
@@ -8,9 +8,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = require('react');
+var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
+
+var _RadioBase = require("./RadioBase");
+
+var _RadioBase2 = _interopRequireDefault(_RadioBase);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32,25 +36,33 @@ var RadioF = function (_React$Component) {
 	}
 
 	_createClass(RadioF, [{
-		key: 'render',
+		key: "render",
 		value: function render() {
 			var _props = this.props;
+			var label = _props.label;
 			var rule = _props.rule;
 			var datas = _props.datas;
-			var className = _props.className;
+			var labelHide = _props.labelHide;
+			var formGroup = _props.formGroup;
 
-			var others = _objectWithoutProperties(_props, ['rule', 'datas', 'className']);
+			var others = _objectWithoutProperties(_props, ["label", "rule", "datas", "labelHide", "formGroup"]);
 
-			return _react2.default.createElement(
-				'div',
-				{ className: (className ? className : 'radio') + (others.disabled ? ' disabled' : '') },
-				_react2.default.createElement(
-					'label',
-					{ className: className ? className : 'radio' },
-					_react2.default.createElement('input', _extends({ type: 'radio', name: rule }, others, { defaultChecked: datas.defaultChecked })),
-					datas.label || datas.value
-				)
-			);
+			if (formGroup) {
+				return _react2.default.createElement(
+					"div",
+					{ className: "form-group radio-group" },
+					_react2.default.createElement(
+						"label",
+						{ className: labelHide ? 'sr-only' : null },
+						label
+					),
+					datas.map(function (radio, i) {
+						return _react2.default.createElement(_RadioBase2.default, _extends({ name: rule, datas: radio }, others, { key: i }));
+					})
+				);
+			} else {
+				return _react2.default.createElement(_RadioBase2.default, _extends({ name: rule, datas: datas }, others));
+			}
 		}
 	}]);
 

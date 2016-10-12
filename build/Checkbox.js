@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
 	value: true
@@ -8,9 +8,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = require('react');
+var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
+
+var _CheckboxBase = require("./CheckboxBase");
+
+var _CheckboxBase2 = _interopRequireDefault(_CheckboxBase);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22,39 +26,47 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Checkbox = function (_React$Component) {
-	_inherits(Checkbox, _React$Component);
+var CheckboxF = function (_React$Component) {
+	_inherits(CheckboxF, _React$Component);
 
-	function Checkbox() {
-		_classCallCheck(this, Checkbox);
+	function CheckboxF() {
+		_classCallCheck(this, CheckboxF);
 
-		return _possibleConstructorReturn(this, (Checkbox.__proto__ || Object.getPrototypeOf(Checkbox)).apply(this, arguments));
+		return _possibleConstructorReturn(this, (CheckboxF.__proto__ || Object.getPrototypeOf(CheckboxF)).apply(this, arguments));
 	}
 
-	_createClass(Checkbox, [{
-		key: 'render',
+	_createClass(CheckboxF, [{
+		key: "render",
 		value: function render() {
 			var _props = this.props;
+			var label = _props.label;
 			var rule = _props.rule;
 			var datas = _props.datas;
-			var className = _props.className;
+			var labelHide = _props.labelHide;
+			var formGroup = _props.formGroup;
 
-			var others = _objectWithoutProperties(_props, ['rule', 'datas', 'className']);
+			var others = _objectWithoutProperties(_props, ["label", "rule", "datas", "labelHide", "formGroup"]);
 
-			return _react2.default.createElement(
-				'div',
-				{ className: (className ? className : 'checkbox') + (others.disabled ? ' disabled' : '') },
-				_react2.default.createElement(
-					'label',
-					{ className: className ? className : 'checkbox' },
-					_react2.default.createElement('input', _extends({ type: 'checkbox', name: rule }, others, { defaultChecked: datas.defaultChecked })),
-					datas.label || datas.value
-				)
-			);
+			if (formGroup) {
+				return _react2.default.createElement(
+					"div",
+					{ className: "form-group checkbox-group" },
+					_react2.default.createElement(
+						"label",
+						{ className: labelHide ? 'sr-only' : null },
+						label
+					),
+					datas.map(function (check, i) {
+						return _react2.default.createElement(_CheckboxBase2.default, _extends({ name: rule, datas: check }, others, { key: i }));
+					})
+				);
+			} else {
+				return _react2.default.createElement(_CheckboxBase2.default, _extends({ name: rule, datas: datas }, others));
+			}
 		}
 	}]);
 
-	return Checkbox;
+	return CheckboxF;
 }(_react2.default.Component);
 
-exports.default = Checkbox;
+exports.default = CheckboxF;

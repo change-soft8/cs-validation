@@ -4,17 +4,15 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Input = require('./Input');
+var _InputBase = require('./InputBase');
 
-var _Input2 = _interopRequireDefault(_Input);
+var _InputBase2 = _interopRequireDefault(_InputBase);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26,40 +24,43 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var InputF = function (_React$Component) {
-	_inherits(InputF, _React$Component);
+var InputGroupBase = function (_React$Component) {
+	_inherits(InputGroupBase, _React$Component);
 
-	function InputF() {
-		_classCallCheck(this, InputF);
+	function InputGroupBase() {
+		_classCallCheck(this, InputGroupBase);
 
-		return _possibleConstructorReturn(this, (InputF.__proto__ || Object.getPrototypeOf(InputF)).apply(this, arguments));
+		return _possibleConstructorReturn(this, (InputGroupBase.__proto__ || Object.getPrototypeOf(InputGroupBase)).apply(this, arguments));
 	}
 
-	_createClass(InputF, [{
+	_createClass(InputGroupBase, [{
 		key: 'render',
 		value: function render() {
 			var _props = this.props;
-			var rule = _props.rule;
-			var label = _props.label;
-			var enabled = _props.enabled;
-			var labelhide = _props.labelhide;
+			var pre = _props.pre;
+			var end = _props.end;
 
-			var others = _objectWithoutProperties(_props, ['rule', 'label', 'enabled', 'labelhide']);
+			var others = _objectWithoutProperties(_props, ['pre', 'end']);
 
 			return _react2.default.createElement(
 				'div',
-				{ className: 'form-group' },
-				labelhide ? '' : _react2.default.createElement(
-					'label',
-					{ htmlFor: rule },
-					label
-				),
-				_react2.default.createElement(_Input2.default, _extends({ rule: rule }, others))
+				{ className: 'input-group' },
+				pre ? _react2.default.createElement(
+					'span',
+					{ className: 'input-group-addon' },
+					_react2.default.createElement('span', { dangerouslySetInnerHTML: { __html: pre } })
+				) : '',
+				_react2.default.createElement(_InputBase2.default, others),
+				end ? _react2.default.createElement(
+					'span',
+					{ className: 'input-group-addon' },
+					_react2.default.createElement('span', { dangerouslySetInnerHTML: { __html: end } })
+				) : ''
 			);
 		}
 	}]);
 
-	return InputF;
+	return InputGroupBase;
 }(_react2.default.Component);
 
-exports.default = InputF;
+exports.default = InputGroupBase;

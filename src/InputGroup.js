@@ -1,16 +1,21 @@
 import React from 'react';
-import Input from './Input';
+import InputGroupBase from './InputGroupBase';
 
-export default class InputGroup extends React.Component {
+export default class InputGroupF extends React.Component {
 
 	render(){
-		const {pre, end, ...others} = this.props;
-		return (
-        	<div className="input-group">
-        	  {pre ? <span className="input-group-addon"><span dangerouslySetInnerHTML={{__html: pre}}></span></span> : ''}
-              <Input {...others} />
-        	  {end ? <span className="input-group-addon"><span dangerouslySetInnerHTML={{__html: end}}></span></span> : ''}
-			</div>
-		)
+		const { rule, label, labelHide, formGroup, ...others} = this.props;
+		if(formGroup){
+			return (
+				<div className="form-group">
+					<label className={labelHide ? 'sr-only' : null} htmlFor={rule}>{label}</label>
+					<InputGroupBase rule={rule} {...others} />
+	            </div>
+			)
+		}else{
+			return (
+				<InputGroupBase rule={rule} {...others} />
+			)
+		}
 	}
 }

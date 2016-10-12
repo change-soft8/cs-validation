@@ -4,15 +4,17 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Input = require('./Input');
+var _InputGroupBase = require('./InputGroupBase');
 
-var _Input2 = _interopRequireDefault(_Input);
+var _InputGroupBase2 = _interopRequireDefault(_InputGroupBase);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -24,43 +26,44 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var InputGroup = function (_React$Component) {
-	_inherits(InputGroup, _React$Component);
+var InputGroupF = function (_React$Component) {
+	_inherits(InputGroupF, _React$Component);
 
-	function InputGroup() {
-		_classCallCheck(this, InputGroup);
+	function InputGroupF() {
+		_classCallCheck(this, InputGroupF);
 
-		return _possibleConstructorReturn(this, (InputGroup.__proto__ || Object.getPrototypeOf(InputGroup)).apply(this, arguments));
+		return _possibleConstructorReturn(this, (InputGroupF.__proto__ || Object.getPrototypeOf(InputGroupF)).apply(this, arguments));
 	}
 
-	_createClass(InputGroup, [{
+	_createClass(InputGroupF, [{
 		key: 'render',
 		value: function render() {
 			var _props = this.props;
-			var pre = _props.pre;
-			var end = _props.end;
+			var rule = _props.rule;
+			var label = _props.label;
+			var labelHide = _props.labelHide;
+			var formGroup = _props.formGroup;
 
-			var others = _objectWithoutProperties(_props, ['pre', 'end']);
+			var others = _objectWithoutProperties(_props, ['rule', 'label', 'labelHide', 'formGroup']);
 
-			return _react2.default.createElement(
-				'div',
-				{ className: 'input-group' },
-				pre ? _react2.default.createElement(
-					'span',
-					{ className: 'input-group-addon' },
-					_react2.default.createElement('span', { dangerouslySetInnerHTML: { __html: pre } })
-				) : '',
-				_react2.default.createElement(_Input2.default, others),
-				end ? _react2.default.createElement(
-					'span',
-					{ className: 'input-group-addon' },
-					_react2.default.createElement('span', { dangerouslySetInnerHTML: { __html: end } })
-				) : ''
-			);
+			if (formGroup) {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'form-group' },
+					_react2.default.createElement(
+						'label',
+						{ className: labelHide ? 'sr-only' : null, htmlFor: rule },
+						label
+					),
+					_react2.default.createElement(_InputGroupBase2.default, _extends({ rule: rule }, others))
+				);
+			} else {
+				return _react2.default.createElement(_InputGroupBase2.default, _extends({ rule: rule }, others));
+			}
 		}
 	}]);
 
-	return InputGroup;
+	return InputGroupF;
 }(_react2.default.Component);
 
-exports.default = InputGroup;
+exports.default = InputGroupF;

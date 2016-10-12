@@ -65,6 +65,8 @@ var Form = function (_React$Component) {
     }, {
         key: 'initForm',
         value: function initForm() {
+            var _this2 = this;
+
             var datas = {};
             var checkValue = [];
             var pname = void 0;
@@ -99,11 +101,14 @@ var Form = function (_React$Component) {
                     }
 
                     Object.assign(datas, data);
-
-                    // 绑定回车事件
-                    this.keyEnter(input);
                 }
             }
+
+            // 绑定回车事件
+            this.keyEnter(this.refs.form, function () {
+                _this2.validator.form();
+            });
+
             return datas;
         }
 
@@ -115,7 +120,7 @@ var Form = function (_React$Component) {
     }, {
         key: 'initFormValidation',
         value: function initFormValidation() {
-            var _this2 = this;
+            var _this3 = this;
 
             // 实体 和 操作
             if (this.props.entityOper) {
@@ -166,7 +171,7 @@ var Form = function (_React$Component) {
                 // 验证通过
                 submitHandler: function submitHandler(form, event) {
                     console.log("Submitted!");
-                    _this2.formSubmit();
+                    _this3.formSubmit();
                 },
                 // 验证错误
                 errorPlacement: function errorPlacement(error, element) {
@@ -277,46 +282,77 @@ var Form = function (_React$Component) {
         }
 
         /**
-         * [keyEnter 表单对事件的处理-回车自动定位下一输入框]
-         * @param         {[type]}                 element [description]
-         * @return        {[type]}                         [description]
+         * [keyEnter description]
+         * @param         {[type]}                 select [表单选择器]
+         * @param         {[type]}                 func   [回调方法]
+         * @return        {[type]}                        [description]
          */
 
     }, {
         key: 'keyEnter',
-        value: function keyEnter(element) {
-            var _this3 = this;
+        value: function keyEnter(select, func) {
+            var uuid = this.uuid();
+            $(select).attr('id', uuid);
+            var ips = $(select).find('input:checked,input:selected,[name][type!=checkbox][type!=radio]');
+            var l = ips.length;
+            if (l < 1) {
+                ips = $(select);
+                l = 1;
+            }
+            ips.each(function (i) {
+                var _this4 = this;
 
-            // 绑定 keyup 事件
-            $(element).keyup(function (e) {
-                if (13 == e.keyCode) {
-                    // 回车事件
-                    // 下个表单元素
-                    var next = $(e.target.parentElement).next();
-                    if (next.hasClass('form-group')) {
-                        // 表单元素
-                        var ele = void 0;
-                        // 拿到 表单输入元素
-                        do {
-                            ele = next.find('input[type!=checkbox][type!=radio][type!=search]');
-                            ele = ele.length ? ele : next.find('textarea');
-                            next = next.next();
-                        } while (!ele.length && next.hasClass('form-group'));
-
-                        if (ele.length) {
-                            // 有表单输入元素
-                            ele.focus();
+                var end = false;
+                if (i == ips.length - 1) end = true;
+                $(this).attr({
+                    'enter_index': i,
+                    'enter_end': end
+                });
+                $(this).keyup(function (event) {
+                    if (13 == event.keyCode) {
+                        var e = $(_this4).attr('enter_end');
+                        var a = $(_this4).attr('enter_finish');
+                        var ei = parseInt($(_this4).attr('enter_index'));
+                        if (a || e == 'true') {
+                            func();
                         } else {
-                            // 没有表单输入元素，进行验证
-                            _this3.validator.form();
+                            $('#' + uuid + ' [enter_index="' + (ei + 1) + '"]')[0].focus();
                         }
-                    } else {
-                        // 按钮元素，进行验证
-                        _this3.validator.form();
                     }
-                    return false;
-                }
+                });
             });
+        }
+
+        /**
+         * [clear 表单验证清除]
+         * @return        {[type]}                 [description]
+         */
+
+    }, {
+        key: 'clear',
+        value: function clear() {
+            this.validator.resetForm();
+        }
+
+        /**
+         * [uuid 生成]
+         * @return        {[type]}                 [uuid]
+         */
+
+    }, {
+        key: 'uuid',
+        value: function uuid() {
+            var s = [];
+            var hexDigits = "0123456789abcdef";
+            for (var i = 0; i < 36; i++) {
+                s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+            }
+            s[14] = "4"; // bits 12-15 of the time_hi_and_version field to 0010
+            s[19] = hexDigits.substr(s[19] & 0x3 | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
+            s[8] = s[13] = s[18] = s[23] = "-";
+
+            var uuid = s.join("");
+            return uuid;
         }
     }, {
         key: 'render',

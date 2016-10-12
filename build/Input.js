@@ -12,6 +12,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _InputBase = require('./InputBase');
+
+var _InputBase2 = _interopRequireDefault(_InputBase);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
@@ -22,49 +26,45 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Input = function (_React$Component) {
-	_inherits(Input, _React$Component);
+var InputF = function (_React$Component) {
+	_inherits(InputF, _React$Component);
 
-	function Input() {
-		var _ref;
+	function InputF() {
+		_classCallCheck(this, InputF);
 
-		var _temp, _this, _ret;
-
-		_classCallCheck(this, Input);
-
-		for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-			args[_key] = arguments[_key];
-		}
-
-		return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Input.__proto__ || Object.getPrototypeOf(Input)).call.apply(_ref, [this].concat(args))), _this), _this.state = { value: _this.props && _this.props.value || '' }, _temp), _possibleConstructorReturn(_this, _ret);
+		return _possibleConstructorReturn(this, (InputF.__proto__ || Object.getPrototypeOf(InputF)).apply(this, arguments));
 	}
 
-	_createClass(Input, [{
-		key: 'handleChange',
-
-
-		// ========================================= 自定义方法 =================================================
-		/**
-   * [handleChange 输入框内容变化 触发事件]
-   * @return        {[type]}                 [description]
-   */
-		value: function handleChange() {
-			this.setState({ 'value': this.refs.sinput.value });
-		}
-	}, {
+	_createClass(InputF, [{
 		key: 'render',
 		value: function render() {
 			var _props = this.props;
 			var rule = _props.rule;
+			var label = _props.label;
 			var enabled = _props.enabled;
+			var labelHide = _props.labelHide;
+			var formGroup = _props.formGroup;
 
-			var others = _objectWithoutProperties(_props, ['rule', 'enabled']);
+			var others = _objectWithoutProperties(_props, ['rule', 'label', 'enabled', 'labelHide', 'formGroup']);
 
-			return _react2.default.createElement('input', _extends({ ref: 'sinput', className: 'form-control', name: rule }, others, { value: this.state.value, onChange: this.handleChange.bind(this) }));
+			if (formGroup) {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'form-group' },
+					_react2.default.createElement(
+						'label',
+						{ className: labelHide ? 'sr-only' : null, htmlFor: rule },
+						label
+					),
+					_react2.default.createElement(_InputBase2.default, _extends({ rule: rule }, others))
+				);
+			} else {
+				return _react2.default.createElement(_InputBase2.default, _extends({ rule: rule }, others));
+			}
 		}
 	}]);
 
-	return Input;
+	return InputF;
 }(_react2.default.Component);
 
-exports.default = Input;
+exports.default = InputF;

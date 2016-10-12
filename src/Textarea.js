@@ -1,12 +1,22 @@
 import React from "react";
+import TextareaBase from "./TextareaBase";
 
-export default class Textarea extends React.Component {
+export default class TextareaF extends React.Component {
 	
 	render(){
-		const {rule, ...others} = this.props;
+		const {label, labelHide, formGroup, ...others} = this.props;
 
-		return (
-			<textarea className="form-control" name={rule} style={{resize:"none"}} {...others}></textarea>
-		)
+		if(formGroup){
+			return (
+				<div className="form-group">
+					<label className={labelHide ? 'sr-only' : null}>{label}</label>
+					<TextareaBase {...others} />
+				</div>
+			)
+		}else{
+			return (
+				<TextareaBase {...others} />
+			)
+		}
 	}
 }
