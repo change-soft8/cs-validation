@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+    value: true
 });
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -27,43 +27,45 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var SelectF2 = function (_React$Component) {
-	_inherits(SelectF2, _React$Component);
+    _inherits(SelectF2, _React$Component);
 
-	function SelectF2() {
-		_classCallCheck(this, SelectF2);
+    function SelectF2() {
+        _classCallCheck(this, SelectF2);
 
-		return _possibleConstructorReturn(this, (SelectF2.__proto__ || Object.getPrototypeOf(SelectF2)).apply(this, arguments));
-	}
+        return _possibleConstructorReturn(this, (SelectF2.__proto__ || Object.getPrototypeOf(SelectF2)).apply(this, arguments));
+    }
 
-	_createClass(SelectF2, [{
-		key: "render",
-		value: function render() {
-			var _props = this.props;
-			var label = _props.label;
-			var rule = _props.rule;
-			var labelHide = _props.labelHide;
-			var formGroup = _props.formGroup;
+    _createClass(SelectF2, [{
+        key: "render",
+        value: function render() {
+            var _props = this.props;
+            var label = _props.label;
+            var rule = _props.rule;
+            var labelHide = _props.labelHide;
+            var kind = _props.kind;
 
-			var others = _objectWithoutProperties(_props, ["label", "rule", "labelHide", "formGroup"]);
+            var others = _objectWithoutProperties(_props, ["label", "rule", "labelHide", "kind"]);
 
-			if (formGroup) {
-				return _react2.default.createElement(
-					"div",
-					{ className: "form-group" },
-					_react2.default.createElement(
-						"label",
-						{ className: labelHide ? 'sr-only' : null, htmlFor: rule },
-						label
-					),
-					_react2.default.createElement(_SelectBase2.default, others)
-				);
-			} else {
-				return _react2.default.createElement(_SelectBase2.default, _extends({ rule: rule }, others));
-			}
-		}
-	}]);
+            if (kind && kind.startsWith('form')) {
+                return _react2.default.createElement(
+                    "div",
+                    { className: "form-group" },
+                    _react2.default.createElement(
+                        "label",
+                        { className: kind.endsWith('label') ? null : 'sr-only', htmlFor: rule },
+                        label
+                    ),
+                    _react2.default.createElement(_SelectBase2.default, others)
+                );
+            } else if (kind == 'base') {
+                return _react2.default.createElement(_SelectBase2.default, _extends({ rule: rule }, others));
+            } else {
+                return _react2.default.createElement(_SelectBase2.default, _extends({ rule: rule }, others));
+            }
+        }
+    }]);
 
-	return SelectF2;
+    return SelectF2;
 }(_react2.default.Component);
 
 exports.default = SelectF2;

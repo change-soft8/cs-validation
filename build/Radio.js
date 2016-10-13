@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+    value: true
 });
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -27,46 +27,48 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var RadioF = function (_React$Component) {
-	_inherits(RadioF, _React$Component);
+    _inherits(RadioF, _React$Component);
 
-	function RadioF() {
-		_classCallCheck(this, RadioF);
+    function RadioF() {
+        _classCallCheck(this, RadioF);
 
-		return _possibleConstructorReturn(this, (RadioF.__proto__ || Object.getPrototypeOf(RadioF)).apply(this, arguments));
-	}
+        return _possibleConstructorReturn(this, (RadioF.__proto__ || Object.getPrototypeOf(RadioF)).apply(this, arguments));
+    }
 
-	_createClass(RadioF, [{
-		key: "render",
-		value: function render() {
-			var _props = this.props;
-			var label = _props.label;
-			var rule = _props.rule;
-			var datas = _props.datas;
-			var labelHide = _props.labelHide;
-			var formGroup = _props.formGroup;
+    _createClass(RadioF, [{
+        key: "render",
+        value: function render() {
+            var _props = this.props;
+            var label = _props.label;
+            var rule = _props.rule;
+            var datas = _props.datas;
+            var labelHide = _props.labelHide;
+            var kind = _props.kind;
 
-			var others = _objectWithoutProperties(_props, ["label", "rule", "datas", "labelHide", "formGroup"]);
+            var others = _objectWithoutProperties(_props, ["label", "rule", "datas", "labelHide", "kind"]);
 
-			if (formGroup) {
-				return _react2.default.createElement(
-					"div",
-					{ className: "form-group radio-group" },
-					_react2.default.createElement(
-						"label",
-						{ className: labelHide ? 'sr-only' : null },
-						label
-					),
-					datas.map(function (radio, i) {
-						return _react2.default.createElement(_RadioBase2.default, _extends({ name: rule, datas: radio }, others, { key: i }));
-					})
-				);
-			} else {
-				return _react2.default.createElement(_RadioBase2.default, _extends({ name: rule, datas: datas }, others));
-			}
-		}
-	}]);
+            if (kind && kind.startsWith('form')) {
+                return _react2.default.createElement(
+                    "div",
+                    { className: "form-group radio-group" },
+                    _react2.default.createElement(
+                        "label",
+                        { className: kind.endsWith('label') ? null : 'sr-only' },
+                        label
+                    ),
+                    datas.map(function (radio, i) {
+                        return _react2.default.createElement(_RadioBase2.default, _extends({ name: rule, datas: radio }, others, { key: i }));
+                    })
+                );
+            } else if (kind == 'base') {
+                return _react2.default.createElement(_RadioBase2.default, _extends({ name: rule, datas: datas }, others));
+            } else {
+                return _react2.default.createElement(_RadioBase2.default, _extends({ name: rule, datas: datas }, others));
+            }
+        }
+    }]);
 
-	return RadioF;
+    return RadioF;
 }(_react2.default.Component);
 
 exports.default = RadioF;

@@ -3,25 +3,29 @@ import RadioBase from "./RadioBase";
 
 export default class RadioF extends React.Component {
 
-	render(){
+    render() {
 
-		const {label, rule, datas, labelHide, formGroup, ...others} = this.props;
+        const { label, rule, datas, labelHide, kind, ...others } = this.props;
 
-		if(formGroup){
-			return (
-				<div className="form-group radio-group">
-					<label className={labelHide ? 'sr-only' : null}>{label}</label>
+        if (kind && kind.startsWith('form')) {
+            return (
+                <div className="form-group radio-group">
+					<label className={kind.endsWith('label') ? null : 'sr-only'}>{label}</label>
 					{datas.map((radio, i) => {
 						return(
 							<RadioBase name={rule} datas={radio} {...others}  key={i} />
 						);
 					})}
 				</div>
-			)
-		}else{
-			return (
-				<RadioBase name={rule} datas={datas} {...others} />
-			)
-		}
-	}
+            )
+        } else if (kind == 'base') {
+            return (
+                <RadioBase name={rule} datas={datas} {...others} />
+            )
+        } else {
+            return (
+                <RadioBase name={rule} datas={datas} {...others} />
+            )
+        }
+    }
 }

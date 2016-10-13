@@ -3,12 +3,12 @@ import CheckboxBase from "./CheckboxBase";
 
 export default class CheckboxF extends React.Component {
 
-	render(){
-		const {label, rule, datas, labelHide, formGroup, ...others} = this.props;
-		if(formGroup){
-			return (
-				<div className="form-group checkbox-group">
-					<label className={labelHide ? 'sr-only' : null}>{label}</label>
+    render() {
+        const { label, rule, datas, labelHide, kind, ...others } = this.props;
+        if (kind && kind.startsWith('form')) {
+            return (
+                <div className="form-group checkbox-group">
+					<label className={kind.endsWith('label') ? null : 'sr-only'}>{label}</label>
 
 					{datas.map((check, i) => {
 						return(
@@ -16,11 +16,15 @@ export default class CheckboxF extends React.Component {
 						);
 					})}
 				</div>
-			)
-		}else{
-			return (
-				<CheckboxBase name={rule} datas={datas} {...others}/>
-			)
-		}
-	}
+            )
+        } else if (kind == 'base') {
+            return (
+                <CheckboxBase name={rule} datas={datas} {...others}/>
+            )
+        } else {
+            return (
+                <CheckboxBase name={rule} datas={datas} {...others}/>
+            )
+        }
+    }
 }

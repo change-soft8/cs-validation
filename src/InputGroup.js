@@ -3,19 +3,23 @@ import InputGroupBase from './InputGroupBase';
 
 export default class InputGroupF extends React.Component {
 
-	render(){
-		const { rule, label, labelHide, formGroup, ...others} = this.props;
-		if(formGroup){
-			return (
-				<div className="form-group">
-					<label className={labelHide ? 'sr-only' : null} htmlFor={rule}>{label}</label>
+    render() {
+        const { rule, label, labelHide, kind, ...others } = this.props;
+        if (kind && kind.startsWith('form')) {
+            return (
+                <div className="form-group">
+					<label className={kind.endsWith('label') ? null : 'sr-only'} htmlFor={rule}>{label}</label>
 					<InputGroupBase rule={rule} {...others} />
 	            </div>
-			)
-		}else{
-			return (
-				<InputGroupBase rule={rule} {...others} />
-			)
-		}
-	}
+            )
+        } else if (kind == 'base') {
+            return (
+                <InputGroupBase rule={rule} {...others} />
+            )
+        } else {
+            return (
+                <InputGroupBase rule={rule} {...others} />
+            )
+        }
+    }
 }

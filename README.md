@@ -34,30 +34,31 @@
 
 > 备注： 以上所有组件(除了Form、Button)具有3种对应样式
 > 
-> - 基础组件 
+> - 基础组件 `kind="base"`
 > ```
 > <Input rule="taskName" value="默认任务名" />
+> <Input rule="taskName" value="默认任务名" kind="base" />
 > -->
 > <input class="form-control" name="taskName" value="默认任务名">
 > ```
 >
-> - 组合表单组件   `formGroup`
+> - 组合表单组件(隐藏label) `kind="form"`
 > ```
-> <Input rule="taskName2" label="任务名" value="默认任务名" formGroup/>
+> <Input rule="taskName2" label="任务名" value="默认任务名" formGroup labelHide/>
 > -->
 > <div class="form-group">
->   <label for="taskName2">任务名</label>
+>   <label class="sr-only" for="taskName2">任务名</label>
 >   <input class="form-control" name="taskName2" value="默认任务名">
 > </div>
 > ```
 >
-> - 组合表单组件(隐藏label)   `formGroup labelHide`
+> - 组合表单组件 `kind="form.label"`
 > ```
-> <Input rule="taskName3" label="任务名" value="默认任务名" formGroup labelHide/>
+> <Input rule="taskName3" label="任务名" value="默认任务名" formGroup/>
 > -->
 > <div class="form-group">
->   <label class="sr-only" for="taskName3">任务名</label>
->   <input class="form-control" name="taskName3" value="默认任务名">
+>   <label for="taskName3">任务名</label>
+>   <input class="form-control" name="taskName3 value="默认任务名">
 > </div>
 > ```
 
@@ -98,7 +99,7 @@ config   | 初始化表单验证
 disabled | 将整个表单disabeld
 
 ** 说明： **
-在整个表单disabeled的情况下，将单个组件属性设为 enabled 即可激活 
+在整个表单 `disabeled` 的情况下，将单个组件属性设为 `enabled` 即可激活 
 
 <a name="cs-validation-API-input"></a>
 #### 3.2 Input
