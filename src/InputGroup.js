@@ -1,5 +1,5 @@
 import React from 'react';
-import InputGroupBase from './InputGroupBase';
+import InputGroupBase from './component/InputGroupBase';
 
 export default class InputGroupF extends React.Component {
 

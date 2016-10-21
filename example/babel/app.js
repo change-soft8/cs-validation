@@ -1,7 +1,7 @@
 import React from 'react';
 
-import {Form, Input, Button, Checkbox, Radio, Select ,Select2, Textarea, InputGroup} from '../../build/index.js';
-// import { Form, Input, Button, Checkbox, Radio, Select, Select2, Textarea, InputGroup } from '../../src/index.js';
+// import {Form, Input, Button, Checkbox, Radio, Select ,Select2, Textarea, InputGroup} from '../../build/index.js';
+import { Form, Input, Button, Checkbox, Radio, Select, Select2, Textarea, InputGroup } from '../../src/index.js';
 
 export default class App extends React.Component {
     /**
@@ -150,14 +150,14 @@ export default class App extends React.Component {
 		          	<div className="panel-body">
 			        	<button type="button" className="btn btn-default" onClick={this.clear.bind(this)}>重置表单</button>
 		          		{/**  callback={this.closeModal.bind(this)}  **/}
-			            <Form entityOper="task-insert" config={config} ref="Form">
+			            <Form config={config} ref="Form" callback={this.closeModal.bind(this)}>
 			            	<span>input（无label）</span>
 				            <Input rule="taskName3" required value="默认任务名"/>
 			            	<span>input（labelHide）</span>
 				            <Input rule="taskName1" label="任务名" required value="默认任务名" kind="form"/>
 			            	<span>input（labelShow）</span>
 				            <Input rule="taskName2" label="任务名" required value="默认任务名" kind="form.label"/>
-				            <InputGroup rule="taskName1" label="任务名1" required value="默认任务名1" pre="<span class='glyphicon glyphicon-user'></span>" end="<input type='checkbox'>" kind="form.label" />
+				            <InputGroup rule="taskName1" label="任务名1" required value="默认任务名1" pre="<span className='glyphicon glyphicon-user'></span>" end="<input type='checkbox'>" kind="form.label" />
 				            <Input rule="inviteFriend" label="手机、邮箱或用户名" placeholder="请输入手机、邮箱或用户名" enabled kind="form.label" />
 				            <Checkbox rule="taskLabel2" datas={dataC}/>
 				            <Checkbox rule="taskLabel" label="任务标签" datas={dataCheck} kind="form.label"/>
@@ -171,8 +171,15 @@ export default class App extends React.Component {
 				            <Input type="password" rule="password" label="密码" required kind="form.label" />
 				            <Input rule="password2" label="确认密码" required kind="form.label" />
 				            { /** <Textarea rule="taskDetail" label="任务详情" required placeholder="请输入任务详情" rows="3" kind="form.label" /> */}
-				            <Button type="submit" className="btn-primary" label="注册" />
+                            <Button type="submit" className="btn-primary" label="注册" />
+                            <div className="btn-group">
+                              <Button type="submit" className="btn-primary" label="注册1" />
+                              <button type="button" className="btn btn-default">Left</button>
+                              <button type="button" className="btn btn-default">Middle</button>
+                              <button type="button" className="btn btn-default">Right</button>
+                            </div>
 			            </Form>
+                        <button type="button" className="btn btn-default" onClick={this.clear.bind(this)}>重置表单</button>
 			          </div>
 		        </div>
 		    </div>

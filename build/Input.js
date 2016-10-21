@@ -12,7 +12,7 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _InputBase = require('./InputBase');
+var _InputBase = require('./component/InputBase');
 
 var _InputBase2 = _interopRequireDefault(_InputBase);
 

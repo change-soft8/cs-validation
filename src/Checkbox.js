@@ -1,5 +1,5 @@
 import React from "react";
-import CheckboxBase from "./CheckboxBase";
+import CheckboxBase from "./component/CheckboxBase";
 
 export default class CheckboxF extends React.Component {
 

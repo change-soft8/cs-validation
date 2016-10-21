@@ -1,5 +1,5 @@
 import React from 'react';
-import InputBase from './InputBase';
+import InputBase from './component/InputBase';
 
 export default class InputF extends React.Component {
 

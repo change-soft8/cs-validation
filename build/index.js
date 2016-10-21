@@ -86,7 +86,7 @@ Object.defineProperty(exports, 'InputGroup', {
   }
 });
 
-var _validation = require('./validation');
+var _validation = require('./js/validation');
 
 var _validation2 = _interopRequireDefault(_validation);
 

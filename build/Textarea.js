@@ -10,7 +10,7 @@ var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _TextareaBase = require("./TextareaBase");
+var _TextareaBase = require("./component/TextareaBase");
 
 var _TextareaBase2 = _interopRequireDefault(_TextareaBase);
 

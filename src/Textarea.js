@@ -1,5 +1,5 @@
 import React from "react";
-import TextareaBase from "./TextareaBase";
+import TextareaBase from "./component/TextareaBase";
 
 export default class TextareaF extends React.Component {
 

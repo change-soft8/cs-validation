@@ -12,7 +12,7 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _InputGroupBase = require('./InputGroupBase');
+var _InputGroupBase = require('./component/InputGroupBase');
 
 var _InputGroupBase2 = _interopRequireDefault(_InputGroupBase);
 

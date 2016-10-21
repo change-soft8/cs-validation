@@ -12,7 +12,7 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _utils = require('./utils');
+var _utils = require('./js/utils');
 
 var _utils2 = _interopRequireDefault(_utils);
 
@@ -270,15 +270,15 @@ var Form = function (_React$Component) {
     }, {
         key: 'formOperation',
         value: function formOperation(datas) {
-            return new Promise(function (resolve, reject) {
-                setTimeout(function () {
-                    console.log('ajax ajax...');
-                    resolve();
-                }, 5000);
-            });
+            // return new Promise((resolve, reject) => {
+            //     setTimeout(() => {
+            //         console.log('ajax ajax...');
+            //         resolve();
+            //     }, 5000);
+            // });
 
             // debugger;
-            // return window.db[entity][this.operation](datas);
+            return window.db[entity][this.operation](datas);
         }
 
         /**

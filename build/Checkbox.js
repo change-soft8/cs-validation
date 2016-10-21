@@ -12,7 +12,7 @@ var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _CheckboxBase = require("./CheckboxBase");
+var _CheckboxBase = require("./component/CheckboxBase");
 
 var _CheckboxBase2 = _interopRequireDefault(_CheckboxBase);
 

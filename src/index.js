@@ -8,4 +8,4 @@ export {default as Select2} from './Select2';
 export {default as Textarea} from './Textarea';
 export {default as InputGroup} from './InputGroup';
 
-import Validation from './validation';
+import Validation from './js/validation';

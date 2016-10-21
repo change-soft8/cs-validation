@@ -1,5 +1,5 @@
 import React from "react";
-import SelectBase2 from "./SelectBase2";
+import SelectBase2 from "./component/SelectBase2";
 
 export default class SelectF2 extends React.Component {
 

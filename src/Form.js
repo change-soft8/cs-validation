@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Utils from './utils';
+import Utils from './js/utils';
 
 import Button from './button';
 
@@ -192,15 +192,15 @@ export default class Form extends React.Component{
      * @return        {[type]}                 [description]
      */
     formOperation(datas){
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                console.log('ajax ajax...');
-                resolve();
-            }, 5000);
-        });
+        // return new Promise((resolve, reject) => {
+        //     setTimeout(() => {
+        //         console.log('ajax ajax...');
+        //         resolve();
+        //     }, 5000);
+        // });
         
         // debugger;
-        // return window.db[entity][this.operation](datas);
+        return window.db[entity][this.operation](datas);
     }
 
     /**

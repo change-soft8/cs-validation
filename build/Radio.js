@@ -12,7 +12,7 @@ var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _RadioBase = require("./RadioBase");
+var _RadioBase = require("./component/RadioBase");
 
 var _RadioBase2 = _interopRequireDefault(_RadioBase);
 

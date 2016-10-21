@@ -12,7 +12,7 @@ var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _SelectBase = require("./SelectBase2");
+var _SelectBase = require("./component/SelectBase2");
 
 var _SelectBase2 = _interopRequireDefault(_SelectBase);
 

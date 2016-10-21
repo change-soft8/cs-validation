@@ -1,5 +1,5 @@
 import React from "react";
-import RadioBase from "./RadioBase";
+import RadioBase from "./component/RadioBase";
 
 export default class RadioF extends React.Component {
 
